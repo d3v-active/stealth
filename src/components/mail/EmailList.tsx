@@ -51,13 +51,13 @@ export function EmailList({
                 className={cn(
                   "group relative mb-1 flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition",
                   "hover:bg-white/[0.04]",
-                  active && "bg-white/[0.06]"
+                  active && "bg-white/[0.14] backdrop-blur-xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7),0_0_0_1px_oklch(1_0_0_/_0.12)] -translate-y-px"
                 )}
               >
                 {active && (
                   <motion.span
                     layoutId="email-active"
-                    className="absolute inset-0 rounded-xl ring-1 ring-white/10"
+                    className="absolute inset-0 rounded-xl ring-1 ring-white/20"
                     transition={{ type: "spring", stiffness: 400, damping: 32 }}
                   />
                 )}

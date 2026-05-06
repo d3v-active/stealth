@@ -49,7 +49,7 @@ export function Sidebar({
         </div>
         {!collapsed && (
           <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold tracking-tight silver-text">Aether Mail</span>
+            <span className="text-sm font-semibold tracking-tight silver-text">Stealth</span>
             <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">workspace</span>
           </div>
         )}

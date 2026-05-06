@@ -6,7 +6,6 @@ import { Sidebar } from "@/components/mail/Sidebar";
 import { Topbar } from "@/components/mail/Topbar";
 import { EmailList } from "@/components/mail/EmailList";
 import { EmailView } from "@/components/mail/EmailView";
-import { RightPanel } from "@/components/mail/RightPanel";
 import { Compose } from "@/components/mail/Compose";
 import { CommandPalette } from "@/components/mail/CommandPalette";
 import { emails } from "@/components/mail/data";
@@ -15,9 +14,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Aether Mail — Premium AI email client" },
-      { name: "description", content: "A futuristic, glassmorphic email client with AI-powered productivity." },
-      { property: "og:title", content: "Aether Mail" },
-      { property: "og:description", content: "A futuristic, glassmorphic email client with AI-powered productivity." },
+      { name: "description", content: "Stealth — the first email protocol on the Stellar blockchain." },
+      { property: "og:title", content: "Stealth" },
+      { property: "og:description", content: "Stealth — the first email protocol on the Stellar blockchain." },
     ],
   }),
   component: MailApp,
@@ -67,7 +66,6 @@ function MailApp() {
           <div className="flex min-w-0 flex-1">
             <EmailList emails={emails} selectedId={selectedId} onSelect={setSelectedId} folder={folder} />
             <EmailView email={selected} />
-            <RightPanel email={selected} />
           </div>
         </div>
       </div>
