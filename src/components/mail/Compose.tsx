@@ -84,10 +84,10 @@ export function Compose({
       setEmojiOpen(false);
       setEncrypted(true);
       setReceipt(true);
-      setPostage("0.0001");
+      setPostage(initialPostage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, initialTo, initialSubject, initialBody]);
+  }, [open, initialTo, initialSubject, initialBody, initialPostage]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { 
