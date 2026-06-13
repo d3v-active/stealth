@@ -25,12 +25,21 @@ type TopbarProps = {
   onOpenPalette: () => void;
   onOpenSettings: () => void;
   onShowToast: (message: string) => void;
+  filters: MailFilters;
+  onFiltersChange: (filters: MailFilters) => void;
+  onQuickAction: (action: "proofs" | "later" | "files") => void;
+  onViewNotifications: () => void;
 };
 
-const quickActions: { label: string; value: string; icon: LucideIcon }[] = [
-  { label: "Proofs", value: "2", icon: ShieldCheck },
-  { label: "Later", value: "5", icon: Clock3 },
-  { label: "Files", value: "9", icon: Paperclip },
+const quickActions: {
+  label: string;
+  value: string;
+  action: "proofs" | "later" | "files";
+  icon: LucideIcon;
+}[] = [
+  { label: "Proofs", value: "2", action: "proofs", icon: ShieldCheck },
+  { label: "Later", value: "5", action: "later", icon: Clock3 },
+  { label: "Files", value: "9", action: "files", icon: Paperclip },
 ];
 
 export function Topbar({ onOpenPalette, onOpenSettings, onShowToast }: TopbarProps) {
