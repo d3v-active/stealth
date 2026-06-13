@@ -301,9 +301,15 @@ function MailApp() {
         initialPostage={preferences.minimumPostage}
         onSubmit={handleComposeSubmit}
       />
-      <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-      <CommandPalette 
-        open={paletteOpen} 
+      <SettingsModal
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        preferences={preferences}
+        onChange={setPreferences}
+        onSave={() => showToast("Settings saved")}
+      />
+      <CommandPalette
+        open={paletteOpen}
         onClose={() => setPaletteOpen(false)}
         onCompose={() => openCompose()}
         onNavigate={(f) => {
@@ -316,6 +322,13 @@ function MailApp() {
           }
         }}
         onOpenSettings={() => setSettingsOpen(true)}
+        emails={emails}
+        onSelectEmail={(email) => {
+          setCustomFolder(null);
+          setFilters(defaultMailFilters);
+          setFolder(email.folder);
+          setSelectedId(email.id);
+        }}
       />
 
       {/* Toast */}
@@ -330,7 +343,12 @@ function MailApp() {
           >
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-[oklch(0.85_0.005_270)]" />
             <span className="text-foreground">{toast}</span>
-            <button onClick={() => setToast(null)} className="ml-2 text-muted-foreground transition hover:text-foreground">Dismiss</button>
+            <button
+              onClick={() => setToast(null)}
+              className="ml-2 text-muted-foreground transition hover:text-foreground"
+            >
+              Dismiss
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
