@@ -19,6 +19,7 @@ import { Route as ApiV1PostageQuoteRouteImport } from './routes/api/v1/postage/q
 import { Route as ApiV1PostageMessageIdRouteImport } from './routes/api/v1/postage/$messageId'
 import { Route as ApiV1PoliciesEvaluateRouteImport } from './routes/api/v1/policies/evaluate'
 import { Route as ApiV1PoliciesOwnerRouteImport } from './routes/api/v1/policies/$owner'
+import { Route as ApiV1ReceiptsMessageIdReadRouteImport } from './routes/api/v1/receipts/$messageId/read'
 import { Route as ApiV1PostageMessageIdSettleRouteImport } from './routes/api/v1/postage/$messageId/settle'
 import { Route as ApiV1PostageMessageIdRefundRouteImport } from './routes/api/v1/postage/$messageId/refund'
 import { Route as ApiV1PoliciesOwnerSendersSenderRouteImport } from './routes/api/v1/policies/$owner/senders/$sender'
@@ -73,6 +74,12 @@ const ApiV1PoliciesOwnerRoute = ApiV1PoliciesOwnerRouteImport.update({
   path: '/api/v1/policies/$owner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1ReceiptsMessageIdReadRoute =
+  ApiV1ReceiptsMessageIdReadRouteImport.update({
+    id: '/read',
+    path: '/read',
+    getParentRoute: () => ApiV1ReceiptsMessageIdRoute,
+  } as any)
 const ApiV1PostageMessageIdSettleRoute =
   ApiV1PostageMessageIdSettleRouteImport.update({
     id: '/settle',
@@ -100,11 +107,12 @@ export interface FileRoutesByFullPath {
   '/api/v1/policies/evaluate': typeof ApiV1PoliciesEvaluateRoute
   '/api/v1/postage/$messageId': typeof ApiV1PostageMessageIdRouteWithChildren
   '/api/v1/postage/quote': typeof ApiV1PostageQuoteRoute
-  '/api/v1/receipts/$messageId': typeof ApiV1ReceiptsMessageIdRoute
+  '/api/v1/receipts/$messageId': typeof ApiV1ReceiptsMessageIdRouteWithChildren
   '/api/v1/postage/': typeof ApiV1PostageIndexRoute
   '/api/v1/receipts/': typeof ApiV1ReceiptsIndexRoute
   '/api/v1/postage/$messageId/refund': typeof ApiV1PostageMessageIdRefundRoute
   '/api/v1/postage/$messageId/settle': typeof ApiV1PostageMessageIdSettleRoute
+  '/api/v1/receipts/$messageId/read': typeof ApiV1ReceiptsMessageIdReadRoute
   '/api/v1/policies/$owner/senders/$sender': typeof ApiV1PoliciesOwnerSendersSenderRoute
 }
 export interface FileRoutesByTo {
@@ -115,11 +123,12 @@ export interface FileRoutesByTo {
   '/api/v1/policies/evaluate': typeof ApiV1PoliciesEvaluateRoute
   '/api/v1/postage/$messageId': typeof ApiV1PostageMessageIdRouteWithChildren
   '/api/v1/postage/quote': typeof ApiV1PostageQuoteRoute
-  '/api/v1/receipts/$messageId': typeof ApiV1ReceiptsMessageIdRoute
+  '/api/v1/receipts/$messageId': typeof ApiV1ReceiptsMessageIdRouteWithChildren
   '/api/v1/postage': typeof ApiV1PostageIndexRoute
   '/api/v1/receipts': typeof ApiV1ReceiptsIndexRoute
   '/api/v1/postage/$messageId/refund': typeof ApiV1PostageMessageIdRefundRoute
   '/api/v1/postage/$messageId/settle': typeof ApiV1PostageMessageIdSettleRoute
+  '/api/v1/receipts/$messageId/read': typeof ApiV1ReceiptsMessageIdReadRoute
   '/api/v1/policies/$owner/senders/$sender': typeof ApiV1PoliciesOwnerSendersSenderRoute
 }
 export interface FileRoutesById {
@@ -131,11 +140,12 @@ export interface FileRoutesById {
   '/api/v1/policies/evaluate': typeof ApiV1PoliciesEvaluateRoute
   '/api/v1/postage/$messageId': typeof ApiV1PostageMessageIdRouteWithChildren
   '/api/v1/postage/quote': typeof ApiV1PostageQuoteRoute
-  '/api/v1/receipts/$messageId': typeof ApiV1ReceiptsMessageIdRoute
+  '/api/v1/receipts/$messageId': typeof ApiV1ReceiptsMessageIdRouteWithChildren
   '/api/v1/postage/': typeof ApiV1PostageIndexRoute
   '/api/v1/receipts/': typeof ApiV1ReceiptsIndexRoute
   '/api/v1/postage/$messageId/refund': typeof ApiV1PostageMessageIdRefundRoute
   '/api/v1/postage/$messageId/settle': typeof ApiV1PostageMessageIdSettleRoute
+  '/api/v1/receipts/$messageId/read': typeof ApiV1ReceiptsMessageIdReadRoute
   '/api/v1/policies/$owner/senders/$sender': typeof ApiV1PoliciesOwnerSendersSenderRoute
 }
 export interface FileRouteTypes {
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/api/v1/receipts/'
     | '/api/v1/postage/$messageId/refund'
     | '/api/v1/postage/$messageId/settle'
+    | '/api/v1/receipts/$messageId/read'
     | '/api/v1/policies/$owner/senders/$sender'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/api/v1/receipts'
     | '/api/v1/postage/$messageId/refund'
     | '/api/v1/postage/$messageId/settle'
+    | '/api/v1/receipts/$messageId/read'
     | '/api/v1/policies/$owner/senders/$sender'
   id:
     | '__root__'
@@ -183,6 +195,7 @@ export interface FileRouteTypes {
     | '/api/v1/receipts/'
     | '/api/v1/postage/$messageId/refund'
     | '/api/v1/postage/$messageId/settle'
+    | '/api/v1/receipts/$messageId/read'
     | '/api/v1/policies/$owner/senders/$sender'
   fileRoutesById: FileRoutesById
 }
@@ -194,7 +207,7 @@ export interface RootRouteChildren {
   ApiV1PoliciesEvaluateRoute: typeof ApiV1PoliciesEvaluateRoute
   ApiV1PostageMessageIdRoute: typeof ApiV1PostageMessageIdRouteWithChildren
   ApiV1PostageQuoteRoute: typeof ApiV1PostageQuoteRoute
-  ApiV1ReceiptsMessageIdRoute: typeof ApiV1ReceiptsMessageIdRoute
+  ApiV1ReceiptsMessageIdRoute: typeof ApiV1ReceiptsMessageIdRouteWithChildren
   ApiV1PostageIndexRoute: typeof ApiV1PostageIndexRoute
   ApiV1ReceiptsIndexRoute: typeof ApiV1ReceiptsIndexRoute
 }
@@ -271,6 +284,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1PoliciesOwnerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/receipts/$messageId/read': {
+      id: '/api/v1/receipts/$messageId/read'
+      path: '/read'
+      fullPath: '/api/v1/receipts/$messageId/read'
+      preLoaderRoute: typeof ApiV1ReceiptsMessageIdReadRouteImport
+      parentRoute: typeof ApiV1ReceiptsMessageIdRoute
+    }
     '/api/v1/postage/$messageId/settle': {
       id: '/api/v1/postage/$messageId/settle'
       path: '/settle'
@@ -321,6 +341,20 @@ const ApiV1PostageMessageIdRouteWithChildren =
     ApiV1PostageMessageIdRouteChildren,
   )
 
+interface ApiV1ReceiptsMessageIdRouteChildren {
+  ApiV1ReceiptsMessageIdReadRoute: typeof ApiV1ReceiptsMessageIdReadRoute
+}
+
+const ApiV1ReceiptsMessageIdRouteChildren: ApiV1ReceiptsMessageIdRouteChildren =
+  {
+    ApiV1ReceiptsMessageIdReadRoute: ApiV1ReceiptsMessageIdReadRoute,
+  }
+
+const ApiV1ReceiptsMessageIdRouteWithChildren =
+  ApiV1ReceiptsMessageIdRoute._addFileChildren(
+    ApiV1ReceiptsMessageIdRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiV1HealthRoute: ApiV1HealthRoute,
@@ -329,7 +363,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiV1PoliciesEvaluateRoute: ApiV1PoliciesEvaluateRoute,
   ApiV1PostageMessageIdRoute: ApiV1PostageMessageIdRouteWithChildren,
   ApiV1PostageQuoteRoute: ApiV1PostageQuoteRoute,
-  ApiV1ReceiptsMessageIdRoute: ApiV1ReceiptsMessageIdRoute,
+  ApiV1ReceiptsMessageIdRoute: ApiV1ReceiptsMessageIdRouteWithChildren,
   ApiV1PostageIndexRoute: ApiV1PostageIndexRoute,
   ApiV1ReceiptsIndexRoute: ApiV1ReceiptsIndexRoute,
 }

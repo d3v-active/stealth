@@ -5,6 +5,7 @@ import {
   assertReceiptParticipant,
   createDeliveryReceipt,
   getReceipt,
+  markReceiptRead,
 } from "../../../src/server/api/receipt-service";
 
 const recipient = `G${"A".repeat(55)}`;
@@ -38,5 +39,15 @@ describe("receipt service", () => {
     expect(() => assertReceiptParticipant(receipt, `G${"C".repeat(55)}`)).toThrowError(
       expect.objectContaining({ status: 403 }),
     );
+  });
+
+  it("records the recipient read timestamp once", async () => {
+    const repository = new MemoryApiRepository();
+    await createDeliveryReceipt(repository, { messageId, recipient, sender });
+
+    await expect(
+      markReceiptRead(repository, messageId, new Date("2026-06-14T12:30:00.000Z")),
+    ).resolves.toMatchObject({ readAt: "2026-06-14T12:30:00.000Z" });
+    await expect(markReceiptRead(repository, messageId)).rejects.toMatchObject({ status: 409 });
   });
 });

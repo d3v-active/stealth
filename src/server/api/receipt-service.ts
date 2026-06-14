@@ -31,3 +31,21 @@ export function assertReceiptParticipant(receipt: Receipt, actor: string) {
     throw new ApiError(403, "forbidden", "Only message participants can read this receipt");
   }
 }
+
+export async function markReceiptRead(
+  repository: ApiRepository,
+  messageId: string,
+  now = new Date(),
+) {
+  const receipt = await getReceipt(repository, messageId);
+  if (receipt.readAt) {
+    throw new ApiError(409, "conflict", "The receipt has already been marked as read", {
+      readAt: receipt.readAt,
+    });
+  }
+
+  return repository.setReceipt({
+    ...receipt,
+    readAt: now.toISOString(),
+  });
+}
