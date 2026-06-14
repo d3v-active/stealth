@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiV1ProtocolRouteImport } from './routes/api/v1/protocol'
 import { Route as ApiV1HealthRouteImport } from './routes/api/v1/health'
+import { Route as ApiV1PoliciesOwnerRouteImport } from './routes/api/v1/policies/$owner'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,53 @@ const ApiV1HealthRoute = ApiV1HealthRouteImport.update({
   path: '/api/v1/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1PoliciesOwnerRoute = ApiV1PoliciesOwnerRouteImport.update({
+  id: '/api/v1/policies/$owner',
+  path: '/api/v1/policies/$owner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/v1/health': typeof ApiV1HealthRoute
   '/api/v1/protocol': typeof ApiV1ProtocolRoute
+  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/v1/health': typeof ApiV1HealthRoute
   '/api/v1/protocol': typeof ApiV1ProtocolRoute
+  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/v1/health': typeof ApiV1HealthRoute
   '/api/v1/protocol': typeof ApiV1ProtocolRoute
+  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/v1/health' | '/api/v1/protocol'
+  fullPaths:
+    | '/'
+    | '/api/v1/health'
+    | '/api/v1/protocol'
+    | '/api/v1/policies/$owner'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/v1/health' | '/api/v1/protocol'
-  id: '__root__' | '/' | '/api/v1/health' | '/api/v1/protocol'
+  to: '/' | '/api/v1/health' | '/api/v1/protocol' | '/api/v1/policies/$owner'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/v1/health'
+    | '/api/v1/protocol'
+    | '/api/v1/policies/$owner'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiV1HealthRoute: typeof ApiV1HealthRoute
   ApiV1ProtocolRoute: typeof ApiV1ProtocolRoute
+  ApiV1PoliciesOwnerRoute: typeof ApiV1PoliciesOwnerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/policies/$owner': {
+      id: '/api/v1/policies/$owner'
+      path: '/api/v1/policies/$owner'
+      fullPath: '/api/v1/policies/$owner'
+      preLoaderRoute: typeof ApiV1PoliciesOwnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +115,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiV1HealthRoute: ApiV1HealthRoute,
   ApiV1ProtocolRoute: ApiV1ProtocolRoute,
+  ApiV1PoliciesOwnerRoute: ApiV1PoliciesOwnerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
