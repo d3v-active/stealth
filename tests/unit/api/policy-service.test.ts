@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
 
 import { MemoryApiRepository } from "../../../src/server/api/memory-repository";
-import { getMailboxPolicy, setMailboxPolicy } from "../../../src/server/api/policy-service";
+import {
+  getMailboxPolicy,
+  getSenderRule,
+  setMailboxPolicy,
+  setSenderRule,
+} from "../../../src/server/api/policy-service";
 
 const owner = `G${"A".repeat(55)}`;
+const sender = `G${"B".repeat(55)}`;
 
 describe("mailbox policy service", () => {
   it("returns contract defaults before configuration", async () => {
@@ -32,6 +38,20 @@ describe("mailbox policy service", () => {
     await expect(getMailboxPolicy(repository, owner)).resolves.toMatchObject({
       policy,
       source: "configured",
+    });
+  });
+
+  it("sets and clears sender overrides", async () => {
+    const repository = new MemoryApiRepository();
+
+    await setSenderRule(repository, owner, sender, "block");
+    await expect(getSenderRule(repository, owner, sender)).resolves.toMatchObject({
+      rule: "block",
+    });
+
+    await setSenderRule(repository, owner, sender, "default");
+    await expect(getSenderRule(repository, owner, sender)).resolves.toMatchObject({
+      rule: "default",
     });
   });
 });

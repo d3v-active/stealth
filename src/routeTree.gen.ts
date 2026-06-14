@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiV1ProtocolRouteImport } from './routes/api/v1/protocol'
 import { Route as ApiV1HealthRouteImport } from './routes/api/v1/health'
 import { Route as ApiV1PoliciesOwnerRouteImport } from './routes/api/v1/policies/$owner'
+import { Route as ApiV1PoliciesOwnerSendersSenderRouteImport } from './routes/api/v1/policies/$owner/senders/$sender'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,25 +35,34 @@ const ApiV1PoliciesOwnerRoute = ApiV1PoliciesOwnerRouteImport.update({
   path: '/api/v1/policies/$owner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1PoliciesOwnerSendersSenderRoute =
+  ApiV1PoliciesOwnerSendersSenderRouteImport.update({
+    id: '/senders/$sender',
+    path: '/senders/$sender',
+    getParentRoute: () => ApiV1PoliciesOwnerRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/v1/health': typeof ApiV1HealthRoute
   '/api/v1/protocol': typeof ApiV1ProtocolRoute
-  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRoute
+  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRouteWithChildren
+  '/api/v1/policies/$owner/senders/$sender': typeof ApiV1PoliciesOwnerSendersSenderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/v1/health': typeof ApiV1HealthRoute
   '/api/v1/protocol': typeof ApiV1ProtocolRoute
-  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRoute
+  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRouteWithChildren
+  '/api/v1/policies/$owner/senders/$sender': typeof ApiV1PoliciesOwnerSendersSenderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/v1/health': typeof ApiV1HealthRoute
   '/api/v1/protocol': typeof ApiV1ProtocolRoute
-  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRoute
+  '/api/v1/policies/$owner': typeof ApiV1PoliciesOwnerRouteWithChildren
+  '/api/v1/policies/$owner/senders/$sender': typeof ApiV1PoliciesOwnerSendersSenderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -61,21 +71,28 @@ export interface FileRouteTypes {
     | '/api/v1/health'
     | '/api/v1/protocol'
     | '/api/v1/policies/$owner'
+    | '/api/v1/policies/$owner/senders/$sender'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/v1/health' | '/api/v1/protocol' | '/api/v1/policies/$owner'
+  to:
+    | '/'
+    | '/api/v1/health'
+    | '/api/v1/protocol'
+    | '/api/v1/policies/$owner'
+    | '/api/v1/policies/$owner/senders/$sender'
   id:
     | '__root__'
     | '/'
     | '/api/v1/health'
     | '/api/v1/protocol'
     | '/api/v1/policies/$owner'
+    | '/api/v1/policies/$owner/senders/$sender'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiV1HealthRoute: typeof ApiV1HealthRoute
   ApiV1ProtocolRoute: typeof ApiV1ProtocolRoute
-  ApiV1PoliciesOwnerRoute: typeof ApiV1PoliciesOwnerRoute
+  ApiV1PoliciesOwnerRoute: typeof ApiV1PoliciesOwnerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -108,14 +125,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1PoliciesOwnerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/policies/$owner/senders/$sender': {
+      id: '/api/v1/policies/$owner/senders/$sender'
+      path: '/senders/$sender'
+      fullPath: '/api/v1/policies/$owner/senders/$sender'
+      preLoaderRoute: typeof ApiV1PoliciesOwnerSendersSenderRouteImport
+      parentRoute: typeof ApiV1PoliciesOwnerRoute
+    }
   }
 }
+
+interface ApiV1PoliciesOwnerRouteChildren {
+  ApiV1PoliciesOwnerSendersSenderRoute: typeof ApiV1PoliciesOwnerSendersSenderRoute
+}
+
+const ApiV1PoliciesOwnerRouteChildren: ApiV1PoliciesOwnerRouteChildren = {
+  ApiV1PoliciesOwnerSendersSenderRoute: ApiV1PoliciesOwnerSendersSenderRoute,
+}
+
+const ApiV1PoliciesOwnerRouteWithChildren =
+  ApiV1PoliciesOwnerRoute._addFileChildren(ApiV1PoliciesOwnerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiV1HealthRoute: ApiV1HealthRoute,
   ApiV1ProtocolRoute: ApiV1ProtocolRoute,
-  ApiV1PoliciesOwnerRoute: ApiV1PoliciesOwnerRoute,
+  ApiV1PoliciesOwnerRoute: ApiV1PoliciesOwnerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
