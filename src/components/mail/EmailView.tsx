@@ -756,7 +756,7 @@ function ReaderBody({ body }: { body: string }) {
   const blocks = getBodyBlocks(body);
 
   return (
-    <div className="mail-reader-body mt-7 max-w-[68ch] space-y-5 text-[16px] leading-7 text-foreground/88 sm:text-[17px] sm:leading-8">
+    <div className="mail-reader-body reader-copy mt-7 max-w-[68ch] space-y-5 text-[16px] leading-7 text-foreground/88 sm:text-[17px] sm:leading-8">
       {blocks.map((block, index) => {
         if (block.kind === "paragraph") {
           return (

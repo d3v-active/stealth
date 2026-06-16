@@ -107,6 +107,7 @@ function MailApp({ isDemoMode, onSignOut }: { isDemoMode?: boolean; onSignOut?: 
   const [calendarEventId, setCalendarEventId] = useState<string | null>(null);
   const [calendarCreateRequest, setCalendarCreateRequest] = useState(0);
   const { preferences, setPreferences, hydrated } = usePreferences();
+  const [settingsSnapshot, setSettingsSnapshot] = useState<typeof preferences | null>(null);
   const senderConversion = useSenderConversion();
   const snooze = useSnooze();
   const isMobile = useIsMobile();
@@ -405,7 +406,10 @@ function MailApp({ isDemoMode, onSignOut }: { isDemoMode?: boolean; onSignOut?: 
         <div className="flex min-w-0 flex-1 flex-col">
           <Topbar
             onOpenPalette={() => setPaletteOpen(true)}
-            onOpenSettings={() => setSettingsOpen(true)}
+            onOpenSettings={() => {
+              setSettingsSnapshot(preferences);
+              setSettingsOpen(true);
+            }}
             onImportContacts={() => setImportOpen(true)}
             onShowToast={showToast}
             onSignOut={onSignOut}
@@ -486,10 +490,22 @@ function MailApp({ isDemoMode, onSignOut }: { isDemoMode?: boolean; onSignOut?: 
       />
       <SettingsModal
         open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
+        onClose={() => {
+          setSettingsOpen(false);
+          setSettingsSnapshot(null);
+        }}
+        onCancel={() => {
+          if (settingsSnapshot) setPreferences(settingsSnapshot);
+          setSettingsOpen(false);
+          setSettingsSnapshot(null);
+          showToast("Settings changes discarded");
+        }}
         preferences={preferences}
         onChange={setPreferences}
-        onSave={() => showToast("Settings saved")}
+        onSave={() => {
+          setSettingsSnapshot(null);
+          showToast("Settings saved");
+        }}
       />
       <CommandPalette
         open={paletteOpen}
@@ -507,7 +523,10 @@ function MailApp({ isDemoMode, onSignOut }: { isDemoMode?: boolean; onSignOut?: 
           setFolder(email.folder);
           setSelectedId(email.id);
         }}
-        onOpenSettings={() => setSettingsOpen(true)}
+        onOpenSettings={() => {
+          setSettingsSnapshot(preferences);
+          setSettingsOpen(true);
+        }}
       />
       <CalendarWorkspace
         open={calendarOpen}
