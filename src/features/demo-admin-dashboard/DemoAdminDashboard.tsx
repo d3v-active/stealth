@@ -5,9 +5,11 @@ import {
   LayoutDashboard,
   Mail,
   Shield,
+  Target,
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CAMPAIGN_TEMPLATES } from "./fixtures/campaignFixtures";
 import type {
   DashboardNavItem,
   DashboardSection,
@@ -22,6 +24,7 @@ const NAV_ITEMS: DashboardNavItem[] = [
   { id: "accounts", label: "Accounts", description: "Demo Stellar accounts and balances" },
   { id: "mail", label: "Mail", description: "Demo mail fixtures and delivery states" },
   { id: "audit", label: "Audit", description: "Demo protocol event log" },
+  { id: "campaigns", label: "Campaigns", description: "Demo campaign checklist templates" },
 ];
 
 const OVERVIEW_STATS: StatCard[] = [
@@ -59,6 +62,7 @@ const SECTION_ICON: Record<DashboardSection, React.ElementType> = {
   accounts: Users,
   mail: Mail,
   audit: Activity,
+  campaigns: Target,
 };
 
 // ─── Content region components ────────────────────────────────────────────────
@@ -193,11 +197,72 @@ function AuditContent() {
   );
 }
 
+function CampaignsContent() {
+  const [activeTemplate, setActiveTemplate] = useState(CAMPAIGN_TEMPLATES[0].id);
+  const selectedTemplate = CAMPAIGN_TEMPLATES.find(t => t.id === activeTemplate)!;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-1">
+        <h3 className="text-sm font-medium text-foreground">Campaign Checklists</h3>
+        <p className="text-sm text-muted-foreground">
+          Select a template to view readiness requirements.
+        </p>
+      </div>
+
+      <div className="flex gap-4">
+        <div className="w-1/3 flex flex-col gap-2">
+          {CAMPAIGN_TEMPLATES.map(template => (
+            <button
+              key={template.id}
+              onClick={() => setActiveTemplate(template.id)}
+              className={cn(
+                "text-left p-3 rounded-lg border border-white/[0.06] transition",
+                activeTemplate === template.id
+                  ? "bg-white/[0.08] text-foreground"
+                  : "bg-white/[0.02] text-muted-foreground hover:bg-white/[0.04]"
+              )}
+            >
+              <div className="text-sm font-medium">{template.name}</div>
+            </button>
+          ))}
+        </div>
+        
+        <div className="w-2/3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+          <h4 className="text-base font-medium text-foreground mb-1">{selectedTemplate.name}</h4>
+          <p className="text-sm text-muted-foreground mb-6">{selectedTemplate.description}</p>
+          
+          <div className="space-y-3">
+            {selectedTemplate.checklist.map(item => (
+              <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg border border-white/[0.04] bg-black/20">
+                <div className={cn(
+                  "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded",
+                  item.completed ? "bg-emerald-500/20 text-emerald-400" : "bg-white/10 text-transparent"
+                )}>
+                  {item.completed && <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.33333 2.5L3.75 7.08333L1.66667 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-sm font-medium text-foreground">{item.label}</span>
+                    {item.required && <span className="text-[10px] uppercase tracking-wider font-semibold text-rose-400/80 bg-rose-500/10 px-1.5 py-0.5 rounded">Required</span>}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const SECTION_CONTENT: Record<DashboardSection, () => ReactNode> = {
   overview: OverviewContent,
   accounts: AccountsContent,
   mail: MailContent,
   audit: AuditContent,
+  campaigns: CampaignsContent,
 };
 
 // ─── Dashboard Shell ──────────────────────────────────────────────────────────
