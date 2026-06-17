@@ -18,15 +18,19 @@ const mockStorage = (() => {
   };
 })();
 
-// Helper to attach mock to global window
+// Helper to attach mock to global window and globalThis
 function setWindowStorage() {
   // @ts-ignore
   global.window = { localStorage: mockStorage } as any;
+  // @ts-ignore
+  global.localStorage = mockStorage;
 }
 
 function clearWindowStorage() {
   // @ts-ignore
   delete (global as any).window;
+  // @ts-ignore
+  delete (global as any).localStorage;
 }
 
 describe('localStorageAdapter', () => {

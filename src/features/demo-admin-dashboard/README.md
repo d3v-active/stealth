@@ -26,7 +26,7 @@ npx vitest run src/features/demo-admin-dashboard/__tests__/layout.test.ts
 ```
 
 The fixture data in `fixtures/demoData.ts` is deterministic, fake, and safe for public repository review.
-=======
+
 This folder is the implementation boundary for the admin dashboard used to populate and manage demo data in the Stealth demo inbox UI.
 
 Contributors working on demo-admin issues should keep new dashboard code, local state helpers, fixtures, validators, UI components, test utilities, and documentation inside:
@@ -94,6 +94,8 @@ the demo inbox.
   references real people or live addresses (a test enforces this).
 - `templates/templateSearch.ts` — `searchTemplates(templates, query)` is a ranked,
   case-insensitive substring search (name/subject hits outrank tag/description hits).
+- `docs/CAMPAIGN_COPY_RULES.md` — campaign copy rules for demo messages and internal
+  notes, with examples and a review checklist.
 - `templates/templateToDraft.ts` — pure, non-mutating helpers that map a template onto the
   existing `Draft` shape (`./types/draft`) and `insertTemplate` / `removeDraft` the dataset,
   with duplicate-insert validation.
