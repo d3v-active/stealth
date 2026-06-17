@@ -18,19 +18,19 @@ const mockStorage = (() => {
   };
 })();
 
-// Helper to attach mock to global window
+// Helper to attach mock to global window and globalThis
 function setWindowStorage() {
-  // @ts-expect-error - mock window storage for Node environment
-  global.window = { localStorage: mockStorage } as unknown as Window & typeof globalThis;
-  // @ts-expect-error - mock localStorage for Node environment
-  global.localStorage = mockStorage as unknown as Storage;
+  // @ts-ignore
+  global.window = { localStorage: mockStorage } as any;
+  // @ts-ignore
+  global.localStorage = mockStorage;
 }
 
 function clearWindowStorage() {
-  // @ts-expect-error - clean up mock
-  delete (global as unknown as { window?: unknown }).window;
-  // @ts-expect-error - clean up mock
-  delete (global as unknown as { localStorage?: unknown }).localStorage;
+  // @ts-ignore
+  delete (global as any).window;
+  // @ts-ignore
+  delete (global as any).localStorage;
 }
 
 describe("localStorageAdapter", () => {

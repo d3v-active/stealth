@@ -46,9 +46,10 @@ export type DashboardSection =
   | "overview"
   | "accounts"
   | "mail"
+  | "attachments"
+  | "events"
   | "templates"
-  | "audit"
-  | "campaigns";
+  | "audit";
 
 /** Props passed to the dashboard shell. */
 export interface DemoAdminDashboardProps {
@@ -64,6 +65,85 @@ export interface StatCard {
   delta?: string;
 }
 
+export type PresetId = "none" | "relay-verification" | "proof-pending" | "receipt-settlement";
+
+export interface PresetAccount {
+  name: string;
+  address: string;
+  balance: string;
+  type: string;
+  relayMetadata?: {
+    nodeUri: string;
+    latency: string;
+    signatureScheme: string;
+    status: "verified" | "pending" | "failed";
+    owner: string;
+  };
+}
+
+export interface PresetMail {
+  subject: string;
+  status: string;
+  folder: string;
+  from: string;
+  email: string;
+  body: string;
+  time: string;
+  unread: boolean;
+  starred: boolean;
+  labels: string[];
+  avatarColor: string;
+  postageAmount?: string;
+  verifiedSender?: boolean;
+  receiptState?: "none" | "pending" | "sent";
+  proofMetadata?: {
+    messageHash: string;
+    paymentHash: string;
+    diagnosticId: string;
+    contractAddress: string;
+    latency: string;
+    signature: string;
+    postageStatus: "pending" | "settled" | "refunded";
+  };
+}
+
+export interface PresetAuditEvent {
+  action: string;
+  actor: string;
+  timestamp: string;
+}
+
+export interface PresetAttachment {
+  id: string;
+  fileName: string;
+  fileSize: string;
+  fileType: string;
+  messageSubject: string;
+  sender: string;
+}
+
+export interface PresetEvent {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  organizer: string;
+  status: "confirmed" | "tentative" | "cancelled";
+}
+
+export interface PresetScenario {
+  id: PresetId;
+  name: string;
+  description: string;
+  stats: StatCard[];
+  accounts: PresetAccount[];
+  mail: PresetMail[];
+  attachments: PresetAttachment[];
+  events: PresetEvent[];
+  auditEvents: PresetAuditEvent[];
+}
+
 export interface DemoUser {
   id: string;
   name: string;
@@ -76,3 +156,6 @@ export interface DemoItem {
   title: string;
   description: string;
 }
+
+
+

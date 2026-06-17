@@ -1,9 +1,5 @@
-// Public entry points for the Demo Admin Dashboard feature.
-// All data is fake, deterministic, and safe for public repository review.
-
 export { DemoAdminDashboard } from "./DemoAdminDashboard";
-export { DemoAdminDashboard as DemoAdminDashboardLayoutPreview } from "./components/DemoAdminDashboard";
-
+export { DemoAdminDashboard as DemoAdminLayoutDashboard } from "./components/DemoAdminDashboard";
 export {
   ADMIN_DASHBOARD_MIN_SUPPORTED_WIDTH,
   getAdminDashboardBreakpoint,
@@ -28,6 +24,8 @@ export type {
   DashboardSection,
   DemoAdminDashboardProps,
   StatCard,
+  PresetAttachment,
+  PresetEvent,
 } from "./types";
 
 export type { CampaignSnapshot } from "./types/campaignSnapshot";

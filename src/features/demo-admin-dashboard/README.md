@@ -37,7 +37,15 @@ Run the unit tests:
 npm run test
 ```
 
-Or target just the admin dashboard unit tests:
+The fixture data in `fixtures/demoData.ts` is deterministic, fake, and safe for public repository review.
+
+This folder is the implementation boundary for the admin dashboard used to populate and manage demo data in the Stealth demo inbox UI.
+
+Contributors working on demo-admin issues should keep new dashboard code, local state helpers, fixtures, validators, UI components, test utilities, and documentation inside:
+
+`src/features/demo-admin-dashboard/`
+
+The rest of the app should only import stable entry points from this folder once the feature is ready to connect to the demo inbox. Avoid changing existing inbox, mail reader, calendar, sender-conversion, or protocol modules unless an issue explicitly asks for a minimal integration shim.
 
 ```bash
 npx vitest run src/features/demo-admin-dashboard/__tests__/
