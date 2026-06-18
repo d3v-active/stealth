@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -53,7 +52,7 @@ function AddressStep({
           "flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition",
           state.recipientAddress.trim().length > 0
             ? "bg-emerald-500 text-black hover:opacity-90"
-            : "cursor-not-allowed bg-white/5 text-muted-foreground"
+            : "cursor-not-allowed bg-white/5 text-muted-foreground",
         )}
       >
         Continue
@@ -129,13 +128,7 @@ function QuoteStep({
   );
 }
 
-function IdentityStep({
-  next,
-  back,
-}: {
-  next: () => void;
-  back: () => void;
-}) {
+function IdentityStep({ next, back }: { next: () => void; back: () => void }) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -282,7 +275,11 @@ function PaymentStep({
               disabled={isSimulating}
               className="flex-1 rounded-lg bg-rose-500 px-4 py-2 text-xs font-semibold text-black flex items-center justify-center gap-2"
             >
-              {isSimulating ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
+              {isSimulating ? (
+                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <RefreshCw className="h-3.5 w-3.5" />
+              )}
               Retry payment
             </button>
           </div>
@@ -304,7 +301,7 @@ function PaymentStep({
               "flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition",
               isSimulating || !state.subject || !state.body
                 ? "cursor-not-allowed bg-white/5 text-muted-foreground"
-                : "bg-emerald-500 text-black hover:opacity-90"
+                : "bg-emerald-500 text-black hover:opacity-90",
             )}
           >
             {isSimulating ? (
@@ -376,7 +373,7 @@ function DeliveryStep({
                   ? "text-rose-400"
                   : state.deliveryStatus === "pending"
                     ? "text-blue-400"
-                    : "text-muted-foreground"
+                    : "text-muted-foreground",
             )}
           >
             {state.deliveryStatus === "delivered"
@@ -440,7 +437,7 @@ function DeliveryStep({
             "w-full rounded-lg px-4 py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition",
             isSimulating
               ? "cursor-not-allowed bg-white/5 text-muted-foreground"
-              : "bg-emerald-500 text-black hover:opacity-90"
+              : "bg-emerald-500 text-black hover:opacity-90",
           )}
         >
           {isSimulating ? (
@@ -460,11 +457,7 @@ function DeliveryStep({
   );
 }
 
-function RefundStep({
-  update,
-}: {
-  update: (patch: Partial<JourneyState>) => void;
-}) {
+function RefundStep({ update }: { update: (patch: Partial<JourneyState>) => void }) {
   const [refunded, setRefunded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -480,9 +473,7 @@ function RefundStep({
     <div className="space-y-4">
       <div className="space-y-2">
         <h3 className="text-sm font-semibold text-foreground">Postage refund</h3>
-        <p className="text-xs text-muted-foreground">
-          Request a refund for your message postage.
-        </p>
+        <p className="text-xs text-muted-foreground">Request a refund for your message postage.</p>
       </div>
 
       {!refunded ? (
@@ -499,7 +490,7 @@ function RefundStep({
               "w-full rounded-lg px-4 py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition",
               isProcessing
                 ? "cursor-not-allowed bg-white/5 text-muted-foreground"
-                : "bg-amber-500 text-black hover:opacity-90"
+                : "bg-amber-500 text-black hover:opacity-90",
             )}
           >
             {isProcessing ? (
@@ -520,7 +511,9 @@ function RefundStep({
             </div>
             <div>
               <p className="text-xs font-semibold text-foreground">Refund requested!</p>
-              <p className="text-[11px] text-muted-foreground">Your XLM will be returned shortly.</p>
+              <p className="text-[11px] text-muted-foreground">
+                Your XLM will be returned shortly.
+              </p>
             </div>
           </div>
           <button
@@ -590,7 +583,7 @@ export function SenderJourney() {
                 <div
                   className={cn(
                     "h-1.5 flex-1 rounded-full transition-colors",
-                    isActive || isCompleted ? "bg-emerald-500" : "bg-white/10"
+                    isActive || isCompleted ? "bg-emerald-500" : "bg-white/10",
                   )}
                 />
               </div>
@@ -618,16 +611,9 @@ export function SenderJourney() {
                 <AddressStep state={state} update={updateState} next={goToNext} />
               )}
               {state.stage === "quote" && (
-                <QuoteStep
-                  state={state}
-                  update={updateState}
-                  next={goToNext}
-                  back={goToPrevious}
-                />
+                <QuoteStep state={state} update={updateState} next={goToNext} back={goToPrevious} />
               )}
-              {state.stage === "identity" && (
-                <IdentityStep next={goToNext} back={goToPrevious} />
-              )}
+              {state.stage === "identity" && <IdentityStep next={goToNext} back={goToPrevious} />}
               {state.stage === "payment" && (
                 <PaymentStep
                   state={state}
@@ -646,7 +632,9 @@ export function SenderJourney() {
 
         {/* Footer */}
         <div className="mt-4 flex items-center justify-center gap-1 text-[10px] text-muted-foreground/60">
-          <span>Stage {currentIndex + 1} of {STAGE_ORDER.length}</span>
+          <span>
+            Stage {currentIndex + 1} of {STAGE_ORDER.length}
+          </span>
           <span>•</span>
           <span>{STAGE_LABELS[state.stage]}</span>
         </div>

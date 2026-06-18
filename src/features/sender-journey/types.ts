@@ -1,11 +1,4 @@
-
-export type JourneyStage =
-  | "address"
-  | "quote"
-  | "identity"
-  | "payment"
-  | "delivery"
-  | "refund";
+export type JourneyStage = "address" | "quote" | "identity" | "payment" | "delivery" | "refund";
 
 export interface JourneyState {
   stage: JourneyStage;
