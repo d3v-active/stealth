@@ -140,32 +140,17 @@ export {
 } from "./proofFormatting";
 export { demoProofRecords } from "./fixtures/proofRecordFixtures";
 
-// Audience segment editor
-export { AudienceSegmentEditor } from "./components/AudienceSegmentEditor";
-export type {
-  EditableSegment,
-  SegmentEditorState,
-  SegmentFieldError,
-  SegmentValidationResult,
-} from "./types/segmentEditorState";
-export { defaultPersonas, PERSONAS_BY_ID } from "./fixtures/personaFixtures";
+// Draft dataset admin store (issue #172): reducer, selectors, hook, types, fixture.
+export { draftDatasetReducer, initialDraftDatasetState } from "./reducers/draftDatasetReducer";
 export {
-  filterPersonas,
-  getPersonasForSegment,
-  assignPersonaToSegment,
-  removePersonaFromSegment,
-  isPersonaAssigned,
-} from "./utils/personaHelpers";
-export {
-  initEditorState,
-  updateSegmentLabel,
-  updateSegmentDescription,
-  addCriteria,
-  removeCriteria,
-  validateSegment,
-} from "./utils/segmentEditorHelpers";
-export {
-  saveSegmentEditorState,
-  loadSegmentEditorState,
-  clearSegmentEditorState,
-} from "./persistence/localStorageAdapter";
+  selectAllDrafts,
+  selectDraftById,
+  selectDraftCount,
+  selectFilteredDrafts,
+  selectIsEmpty,
+  selectSelectedDraft,
+} from "./selectors/draftDatasetSelectors";
+export { useDraftDataset } from "./hooks/useDraftDataset";
+export type { UseDraftDatasetResult } from "./hooks/useDraftDataset";
+export type { DraftDatasetAction, DraftDatasetState } from "./types/draftDataset";
+export { draftDatasetSample } from "./fixtures/draftDatasetFixtures";
