@@ -157,7 +157,7 @@ export {
   SenderPersonaSelector,
   SenderPersonaEditor,
   validateSenderPersona,
-} from "./senderPersonas";
+} from "./senderPersonas/index";
 export {
   POSTAGE_STATUS_LABEL,
   truncateHash,
