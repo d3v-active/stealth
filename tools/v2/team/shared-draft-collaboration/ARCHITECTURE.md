@@ -113,21 +113,21 @@ tools/v2/team/shared-draft-collaboration/
 
 **Public Methods:**
 
-| Method         | Input              | Output               | Errors                                   |
-| -------------- | ------------------ | -------------------- | ---------------------------------------- |
-| `getDrafts`    | `DraftFilter`      | `SharedDraftData[]`  | None                                     |
-| `addDraft`     | `CreateDraftInput` | `SharedDraftData`    | `DraftValidationError`, `DraftLimitError` |
-| `updateDraft`  | `UpdateDraftInput` | `SharedDraftData`    | `DraftValidationError`, `DraftNotFoundError` |
-| `removeDraft`  | `DraftId`          | `void`               | `DraftValidationError`, `DraftNotFoundError` |
-| `setActive`    | `DraftId`          | `SharedDraftData`    | `DraftValidationError`, `DraftNotFoundError` |
-| `getMetrics`   | None               | `DraftMetrics`       | None                                     |
+| Method        | Input              | Output              | Errors                                       |
+| ------------- | ------------------ | ------------------- | -------------------------------------------- |
+| `getDrafts`   | `DraftFilter`      | `SharedDraftData[]` | None                                         |
+| `addDraft`    | `CreateDraftInput` | `SharedDraftData`   | `DraftValidationError`, `DraftLimitError`    |
+| `updateDraft` | `UpdateDraftInput` | `SharedDraftData`   | `DraftValidationError`, `DraftNotFoundError` |
+| `removeDraft` | `DraftId`          | `void`              | `DraftValidationError`, `DraftNotFoundError` |
+| `setActive`   | `DraftId`          | `SharedDraftData`   | `DraftValidationError`, `DraftNotFoundError` |
+| `getMetrics`  | None               | `DraftMetrics`      | None                                         |
 
 **Pure Helpers:**
 
-| Function          | Input                   | Output             |
-| ----------------- | ----------------------- | ------------------ |
-| `computeMetrics`  | `SharedDraftData[]`     | `DraftMetrics`     |
-| `applyFilter`     | `drafts`, `DraftFilter` | `SharedDraftData[]` |
+| Function         | Input                   | Output              |
+| ---------------- | ----------------------- | ------------------- |
+| `computeMetrics` | `SharedDraftData[]`     | `DraftMetrics`      |
+| `applyFilter`    | `drafts`, `DraftFilter` | `SharedDraftData[]` |
 
 **Implementation Contract:**
 
@@ -163,10 +163,10 @@ node --test tools/v2/team/shared-draft-collaboration/tests/shared-draft.test.mjs
 
 ### Coverage
 
-| Category | Scenario |
-|----------|----------|
-| Fixtures | Correct count, required fields |
-| Metrics | Totals, active/inactive, collaborators |
-| Filter | isActive, search, combined |
-| Service | CRUD, validation, not-found, state tracking |
+| Category | Scenario                                                         |
+| -------- | ---------------------------------------------------------------- |
+| Fixtures | Correct count, required fields                                   |
+| Metrics  | Totals, active/inactive, collaborators                           |
+| Filter   | isActive, search, combined                                       |
+| Service  | CRUD, validation, not-found, state tracking                      |
 | Security | XSS sanitization, CRLF blocking, path traversal, oversized input |

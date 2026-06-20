@@ -20,8 +20,8 @@ Do not wire this tool into the main app, routing, inbox architecture, wallet cor
 
 ```ts
 type CreateDraftInput = {
-  title: string;          // required, max 120 chars
-  subject?: string;       // optional, max 200 chars
+  title: string; // required, max 120 chars
+  subject?: string; // optional, max 200 chars
   collaborators?: number; // optional, defaults to 1, max 50
 };
 ```
@@ -30,9 +30,9 @@ type CreateDraftInput = {
 
 ```ts
 type UpdateDraftInput = {
-  id: string;             // required, alphanumeric + hyphens/underscores
-  title?: string;         // optional partial update
-  subject?: string;       // optional partial update
+  id: string; // required, alphanumeric + hyphens/underscores
+  title?: string; // optional partial update
+  subject?: string; // optional partial update
   collaborators?: number; // optional partial update
 };
 ```
@@ -65,22 +65,22 @@ type DraftMetrics = {
 
 ## Errors
 
-| Error                  | Condition              | Shape                         |
-| ---------------------- | ---------------------- | ----------------------------- |
-| `DraftValidationError` | Input fails validation | `{ message, field }`          |
-| `DraftNotFoundError`   | Draft id does not exist | `{ message, draftId }`        |
-| `DraftLimitError`      | Collection at capacity | `{ message, limit }`          |
+| Error                  | Condition               | Shape                  |
+| ---------------------- | ----------------------- | ---------------------- |
+| `DraftValidationError` | Input fails validation  | `{ message, field }`   |
+| `DraftNotFoundError`   | Draft id does not exist | `{ message, draftId }` |
+| `DraftLimitError`      | Collection at capacity  | `{ message, limit }`   |
 
 ## Service Operations
 
-| Operation     | Input                           | Output               | Errors                                    |
-| ------------- | ------------------------------- | -------------------- | ---------------------------------------- |
-| `getDrafts`   | `DraftFilter` (optional)        | `SharedDraftData[]`  | None                                     |
-| `addDraft`    | `CreateDraftInput`              | `SharedDraftData`    | `DraftValidationError`, `DraftLimitError` |
-| `updateDraft` | `UpdateDraftInput`              | `SharedDraftData`    | `DraftValidationError`, `DraftNotFoundError` |
-| `removeDraft` | `DraftId`                       | `void`               | `DraftValidationError`, `DraftNotFoundError` |
-| `setActive`   | `DraftId`                       | `SharedDraftData`    | `DraftValidationError`, `DraftNotFoundError` |
-| `getMetrics`  | None                            | `DraftMetrics`       | None                                     |
+| Operation     | Input                    | Output              | Errors                                       |
+| ------------- | ------------------------ | ------------------- | -------------------------------------------- |
+| `getDrafts`   | `DraftFilter` (optional) | `SharedDraftData[]` | None                                         |
+| `addDraft`    | `CreateDraftInput`       | `SharedDraftData`   | `DraftValidationError`, `DraftLimitError`    |
+| `updateDraft` | `UpdateDraftInput`       | `SharedDraftData`   | `DraftValidationError`, `DraftNotFoundError` |
+| `removeDraft` | `DraftId`                | `void`              | `DraftValidationError`, `DraftNotFoundError` |
+| `setActive`   | `DraftId`                | `SharedDraftData`   | `DraftValidationError`, `DraftNotFoundError` |
+| `getMetrics`  | None                     | `DraftMetrics`      | None                                         |
 
 ## Loading States
 
@@ -93,8 +93,8 @@ All service operations return Promises. The configurable `delayMs` in `ServiceCo
 
 ```ts
 type DraftFilter = {
-  isActive?: boolean;   // filter by active/inactive status
-  search?: string|null; // case-insensitive title/subject search
+  isActive?: boolean; // filter by active/inactive status
+  search?: string | null; // case-insensitive title/subject search
 };
 ```
 
