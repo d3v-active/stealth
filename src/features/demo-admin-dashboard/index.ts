@@ -499,3 +499,15 @@ export {
   getDemoMessagesWithAttachments,
   getDemoMessagesWithEvents,
 } from "./fixtures/demoInboxData";
+
+// Demo Data Validation (issue #24): safety compliance helpers
+export {
+  validateDemoDataset,
+  validateDemoMessage,
+  validateDemoSender,
+  validateSafeEmailAddress,
+  validateTextContent,
+  generateComplianceReport,
+  assertDemoDataSafety,
+} from "./helpers/demoDataValidator";
+export type { ValidationIssue, ValidationResult } from "./helpers/demoDataValidator";

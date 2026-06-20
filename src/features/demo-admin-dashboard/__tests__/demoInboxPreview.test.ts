@@ -7,6 +7,12 @@ import {
   getDemoMessagesWithAttachments,
   getDemoMessagesWithEvents,
 } from "../fixtures/demoInboxData";
+import { 
+  validateDemoDataset,
+  validateDemoMessage,
+  validateSafeEmailAddress,
+  assertDemoDataSafety,
+} from "../helpers/demoDataValidator";
 
 describe("Demo Inbox Data", () => {
   describe("createDemoInboxData", () => {
@@ -116,20 +122,35 @@ describe("Demo Inbox Data", () => {
   describe("data safety", () => {
     const dataset = createDemoInboxData();
 
+    it("should pass comprehensive safety validation", () => {
+      // Use the validator to ensure compliance
+      expect(() => assertDemoDataSafety(dataset)).not.toThrow();
+      
+      const result = validateDemoDataset(dataset);
+      expect(result.isValid).toBe(true);
+      
+      // Should have no errors (warnings might be acceptable)
+      const errors = result.issues.filter(issue => issue.severity === "error");
+      expect(errors).toHaveLength(0);
+    });
+
+    it("should validate safe email addresses", () => {
+      expect(validateSafeEmailAddress("user@example.com")).toBe(true);
+      expect(validateSafeEmailAddress("user@example.org")).toBe(true);
+      expect(validateSafeEmailAddress("user@notifications.stealth.demo")).toBe(true);
+      
+      expect(validateSafeEmailAddress("user@gmail.com")).toBe(false);
+      expect(validateSafeEmailAddress("user@company.com")).toBe(false);
+      expect(validateSafeEmailAddress("user@real-domain.com")).toBe(false);
+    });
+
     it("should not contain real PII or sensitive data", () => {
       dataset.messages.forEach(message => {
-        // Check that message content doesn't contain common PII patterns
-        const content = `${message.subject} ${message.snippet} ${message.body}`.toLowerCase();
+        const issues = validateDemoMessage(message);
+        const errors = issues.filter(issue => issue.severity === "error");
         
-        // Should not contain real phone numbers
-        expect(content).not.toMatch(/\b\d{3}-\d{3}-\d{4}\b/);
-        expect(content).not.toMatch(/\(\d{3}\)\s?\d{3}-\d{4}/);
-        
-        // Should not contain real SSNs
-        expect(content).not.toMatch(/\b\d{3}-\d{2}-\d{4}\b/);
-        
-        // Should not contain real credit card numbers
-        expect(content).not.toMatch(/\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/);
+        // Should have no validation errors
+        expect(errors).toHaveLength(0);
       });
     });
 
