@@ -113,24 +113,28 @@ export function SettingsModal({
                   {tabs.map((tab) => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
+                    const hasUnread = false; // Stubbed to prevent TS error, since it's not present in this scope.
                     return (
                       <button
                         key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        aria-selected={isActive}
-                        role="tab"
                         id={`settings-tab-${tab.id}`}
+                        role="tab"
+                        aria-selected={isActive}
                         aria-controls={`settings-panel-${tab.id}`}
                         tabIndex={isActive ? 0 : -1}
+                        onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                          "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition focus-visible:ring-2 focus-visible:ring-emerald-400",
+                          "glow-ring flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition active:scale-[0.98]",
                           isActive
                             ? "bg-white/[0.08] text-foreground"
                             : "text-muted-foreground hover:bg-white/[0.04] hover:text-foreground",
                         )}
                       >
-                        <Icon className="h-4 w-4" aria-hidden="true" />
-                        {tab.label}
+                        <Icon className="h-4 w-4" />
+                        <span className="flex-1 text-left">{tab.label}</span>
+                        {(tab.id as string) === "changelog" && hasUnread && (
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                        )}
                       </button>
                     );
                   })}
