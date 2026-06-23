@@ -14,12 +14,15 @@ export function useGrammarCleaner(): UseGrammarCleanerReturn {
   const [state, setState] = useState<GrammarState>({ status: "idle" });
   const [value, setValue] = useState("");
 
-  const check = useCallback((input?: GrammarInput) => {
-    setState({ status: "loading" });
-    const payload = input ?? { bodyText: value };
-    const result = cleanGrammar(payload);
-    setState(toReadyState(result));
-  }, [value]);
+  const check = useCallback(
+    (input?: GrammarInput) => {
+      setState({ status: "loading" });
+      const payload = input ?? { bodyText: value };
+      const result = cleanGrammar(payload);
+      setState(toReadyState(result));
+    },
+    [value],
+  );
 
   const reset = useCallback(() => {
     setValue("");

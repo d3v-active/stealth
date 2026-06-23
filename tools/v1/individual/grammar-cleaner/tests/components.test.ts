@@ -53,12 +53,16 @@ describe("GrammarCleanerEmpty", () => {
 
   it("renders submit button disabled when empty", () => {
     const el = GrammarCleanerEmpty({ value: "", onChange, onSubmit });
-    expect(hasElement(el, (n) => n.props.type === "button" && n.props.disabled === true)).toBe(true);
+    expect(hasElement(el, (n) => n.props.type === "button" && n.props.disabled === true)).toBe(
+      true,
+    );
   });
 
   it("renders submit button enabled when text present", () => {
     const el = GrammarCleanerEmpty({ value: "some text", onChange, onSubmit });
-    expect(hasElement(el, (n) => n.props.type === "button" && n.props.disabled === false)).toBe(true);
+    expect(hasElement(el, (n) => n.props.type === "button" && n.props.disabled === false)).toBe(
+      true,
+    );
   });
 });
 

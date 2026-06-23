@@ -26,7 +26,10 @@ export function GrammarCleanerView({ result, onReset }: GrammarCleanerViewProps)
   const { originalText, correctedText, issues, issueCount, changed } = result;
 
   return (
-    <article aria-label="Grammar check results" style={{ border: "1px solid #e0e0e0", borderRadius: 8 }}>
+    <article
+      aria-label="Grammar check results"
+      style={{ border: "1px solid #e0e0e0", borderRadius: 8 }}
+    >
       <header
         style={{
           padding: "1rem 1.25rem",
@@ -37,9 +40,7 @@ export function GrammarCleanerView({ result, onReset }: GrammarCleanerViewProps)
           alignItems: "center",
         }}
       >
-        <h2 style={{ fontSize: "1rem", fontWeight: 600, margin: 0 }}>
-          Grammar Check Results
-        </h2>
+        <h2 style={{ fontSize: "1rem", fontWeight: 600, margin: 0 }}>Grammar Check Results</h2>
         <span
           aria-live="polite"
           style={{
@@ -97,9 +98,7 @@ export function GrammarCleanerView({ result, onReset }: GrammarCleanerViewProps)
                       {issue.original}
                     </span>
                     {" → "}
-                    <span style={{ color: "#27ae60", fontWeight: 500 }}>
-                      {issue.suggestion}
-                    </span>
+                    <span style={{ color: "#27ae60", fontWeight: 500 }}>{issue.suggestion}</span>
                   </div>
                   <div style={{ color: "#888", fontSize: "0.78rem", marginTop: "0.15rem" }}>
                     {issue.explanation}

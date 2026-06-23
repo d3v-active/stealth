@@ -6,7 +6,11 @@ export interface GrammarCleanerEmptyProps {
   onSubmit: () => void;
 }
 
-export function GrammarCleanerEmpty({ value, onChange, onSubmit }: GrammarCleanerEmptyProps): JSX.Element {
+export function GrammarCleanerEmpty({
+  value,
+  onChange,
+  onSubmit,
+}: GrammarCleanerEmptyProps): JSX.Element {
   return (
     <section
       aria-label="Grammar checker input"
@@ -22,7 +26,16 @@ export function GrammarCleanerEmpty({ value, onChange, onSubmit }: GrammarCleane
       <p id="gc-empty-desc" style={{ margin: "0 0 1rem" }}>
         Paste or type text below to check for grammar issues.
       </p>
-      <label htmlFor="gc-text-input" style={{ display: "block", marginBottom: "0.5rem", fontWeight: 500, fontSize: "0.85rem", textAlign: "left" }}>
+      <label
+        htmlFor="gc-text-input"
+        style={{
+          display: "block",
+          marginBottom: "0.5rem",
+          fontWeight: 500,
+          fontSize: "0.85rem",
+          textAlign: "left",
+        }}
+      >
         Text to check
       </label>
       <textarea

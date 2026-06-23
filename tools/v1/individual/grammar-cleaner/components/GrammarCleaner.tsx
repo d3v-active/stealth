@@ -14,7 +14,14 @@ export interface GrammarCleanerProps {
   onReset?: () => void;
 }
 
-export function GrammarCleaner({ state, value, onChange, onSubmit, onRetry, onReset }: GrammarCleanerProps): JSX.Element {
+export function GrammarCleaner({
+  state,
+  value,
+  onChange,
+  onSubmit,
+  onRetry,
+  onReset,
+}: GrammarCleanerProps): JSX.Element {
   switch (state.status) {
     case "idle":
       return <GrammarCleanerEmpty value={value} onChange={onChange} onSubmit={onSubmit} />;

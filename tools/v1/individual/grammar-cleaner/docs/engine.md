@@ -30,30 +30,36 @@ Output (GrammarResultStatus)
 ## Rule Categories
 
 ### Spelling (Homophones & Common Misspellings)
+
 - their/there/they're, your/you're, its/it's, effect/affect
 - Common typos: teh, recieve, acheive, definately, occurence, seperate,
   calender, tommorow, begining, embarass, accomodate, wich, thier, alot
 
 ### Grammar
+
 - "could of" → "could have", "should of" → "should have",
   "would of" → "would have", "might of" → "might have"
 - "less people" → "fewer people" (for countable nouns)
 
 ### Capitalization
+
 - Lowercase "i" → uppercase "I"
 - First letter of each sentence after `.`, `!`, or `?`
 
 ### Punctuation
+
 - Double/multiple spaces → single space
 - Space before comma, period, question mark, exclamation mark → removed
 - Multiple periods → single period
 
 ### Redundancy
+
 - Filler words removed: just, really, very, basically, actually
 
 ## Guard Layer
 
 Before the engine runs, the guard layer (guards.ts):
+
 - Strips control characters and invisible/zero-width characters (sanitize)
 - Enforces hard input limits:
   - Subject: max 200 characters

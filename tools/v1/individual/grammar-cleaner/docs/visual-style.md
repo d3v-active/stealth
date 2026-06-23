@@ -16,26 +16,26 @@ issue wires it in.
 
 ## Colors
 
-| Token                    | Hex       | Usage                                  |
-| ------------------------ | --------- | -------------------------------------- |
-| `--gc-border`            | `#e0e0e0` | Default border and loading ring        |
-| `--gc-border-dashed`     | `#ccc`    | Dashed border for empty state          |
-| `--gc-text-primary`      | `#222`    | Corrected text body                    |
-| `--gc-text-secondary`    | `#666`    | Labels, metadata, hint text            |
-| `--gc-text-muted`        | `#888`    | Issue explanation text                 |
-| `--gc-accent`            | `#0066cc` | Loading spinner top, submit button     |
-| `--gc-error-border`      | `#e74c3c` | Error state border                     |
-| `--gc-error-bg`          | `#fdf0ef` | Error state background                 |
-| `--gc-error-text`        | `#c0392b` | Error heading and retry border         |
-| `--gc-header-bg`         | `#f9f9fb` | Result view header background          |
-| `--gc-correct-bg`        | `#f4fdf4` | Corrected text background              |
-| `--gc-correct-border`    | `#c8e6c9` | Corrected text border                  |
-| `--gc-issue-bg`          | `#fafafa` | Issue item background                  |
-| `--gc-spelling`          | `#e67e22` | Spelling issue left border             |
-| `--gc-grammar`           | `#8e44ad` | Grammar issue left border              |
-| `--gc-punctuation`       | `#2980b9` | Punctuation issue left border          |
-| `--gc-capitalization`    | `#16a085` | Capitalization issue left border       |
-| `--gc-redundancy`        | `#7f8c8d` | Redundancy issue left border           |
+| Token                 | Hex       | Usage                              |
+| --------------------- | --------- | ---------------------------------- |
+| `--gc-border`         | `#e0e0e0` | Default border and loading ring    |
+| `--gc-border-dashed`  | `#ccc`    | Dashed border for empty state      |
+| `--gc-text-primary`   | `#222`    | Corrected text body                |
+| `--gc-text-secondary` | `#666`    | Labels, metadata, hint text        |
+| `--gc-text-muted`     | `#888`    | Issue explanation text             |
+| `--gc-accent`         | `#0066cc` | Loading spinner top, submit button |
+| `--gc-error-border`   | `#e74c3c` | Error state border                 |
+| `--gc-error-bg`       | `#fdf0ef` | Error state background             |
+| `--gc-error-text`     | `#c0392b` | Error heading and retry border     |
+| `--gc-header-bg`      | `#f9f9fb` | Result view header background      |
+| `--gc-correct-bg`     | `#f4fdf4` | Corrected text background          |
+| `--gc-correct-border` | `#c8e6c9` | Corrected text border              |
+| `--gc-issue-bg`       | `#fafafa` | Issue item background              |
+| `--gc-spelling`       | `#e67e22` | Spelling issue left border         |
+| `--gc-grammar`        | `#8e44ad` | Grammar issue left border          |
+| `--gc-punctuation`    | `#2980b9` | Punctuation issue left border      |
+| `--gc-capitalization` | `#16a085` | Capitalization issue left border   |
+| `--gc-redundancy`     | `#7f8c8d` | Redundancy issue left border       |
 
 ## Typography
 
@@ -85,9 +85,9 @@ issue wires it in.
 
 ## States
 
-| State   | Component                | Visual cue                                     |
-| ------- | ------------------------ | ---------------------------------------------- |
-| idle    | `GrammarCleanerEmpty`    | Dashed border, textarea input, submit button   |
-| loading | `GrammarCleanerLoading`  | CSS spinner animation + "Checking grammar…"    |
-| error   | `GrammarCleanerError`    | Red border + background, error message, retry  |
-| ready   | `GrammarCleanerView`     | Solid border, issues list, corrected/original  |
+| State   | Component               | Visual cue                                    |
+| ------- | ----------------------- | --------------------------------------------- |
+| idle    | `GrammarCleanerEmpty`   | Dashed border, textarea input, submit button  |
+| loading | `GrammarCleanerLoading` | CSS spinner animation + "Checking grammar…"   |
+| error   | `GrammarCleanerError`   | Red border + background, error message, retry |
+| ready   | `GrammarCleanerView`    | Solid border, issues list, corrected/original |

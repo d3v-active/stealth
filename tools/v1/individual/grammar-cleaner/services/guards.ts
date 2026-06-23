@@ -17,6 +17,7 @@ export type SafeGrammarResult =
   | GrammarResultStatus
   | { status: "error"; code: GuardErrorCode; message: string };
 
+// eslint-disable-next-line no-control-regex
 const CONTROL_CHARACTERS = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g;
 const INVISIBLE_CHARACTERS = /[\u200b-\u200d\u2060\ufeff]/g;
 

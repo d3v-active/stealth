@@ -1,4 +1,9 @@
-export type GrammarIssueCategory = "spelling" | "grammar" | "punctuation" | "capitalization" | "redundancy";
+export type GrammarIssueCategory =
+  | "spelling"
+  | "grammar"
+  | "punctuation"
+  | "capitalization"
+  | "redundancy";
 
 export interface TextRange {
   start: number;
@@ -47,51 +52,235 @@ interface ReplacementRule {
 }
 
 const HOMOPHONE_RULES: ReplacementRule[] = [
-  { pattern: /\byoure\b/gi, replacement: "you're", type: "spelling", explanation: "Use 'you're' as a contraction of 'you are'." },
-  { pattern: /\bits\s+(?!own|base|surface|size|shape|color|name|purpose|function|status|value|type|role|job|turn|best|worst|own|way)\b(?!(?:not|been|being|also|still|already|always|often|just|only|even|never|ever|all|both|each|every|some|any|no|the|a|an)\b)/gi, replacement: "it's", type: "spelling", explanation: "Use 'it's' as a contraction of 'it is' or 'it has'." },
-  { pattern: /\baffect\b/gi, replacement: "effect", type: "spelling", explanation: "Use 'effect' (noun) for results; 'affect' is usually a verb." },
-  { pattern: /\bteh\b/gi, replacement: "the", type: "spelling", explanation: "Common typo: 'teh' should be 'the'." },
-  { pattern: /\breciev(e|ed|es|ing)\b/gi, replacement: "receiv$1", type: "spelling", explanation: "'receive' follows 'i before e except after c'." },
-  { pattern: /\bacheive\b/gi, replacement: "achieve", type: "spelling", explanation: "'achieve' follows 'i before e'." },
-  { pattern: /\bdefinately\b/gi, replacement: "definitely", type: "spelling", explanation: "'definitely' has two 'i's, not an 'a'." },
-  { pattern: /\boccurence\b/gi, replacement: "occurrence", type: "spelling", explanation: "'occurrence' has two 'c's and two 'r's." },
-  { pattern: /\bseperate\b/gi, replacement: "separate", type: "spelling", explanation: "'separate' has an 'a' after 'sep', not an 'e'." },
-  { pattern: /\bcalender\b/gi, replacement: "calendar", type: "spelling", explanation: "'calendar' ends with '-ar', not '-er'." },
-  { pattern: /\btommorow\b/gi, replacement: "tomorrow", type: "spelling", explanation: "'tomorrow' has one 'm', two 'r's." },
-  { pattern: /\bbegining\b/gi, replacement: "beginning", type: "spelling", explanation: "'beginning' has double 'n'." },
-  { pattern: /\bembarras\b/gi, replacement: "embarrass", type: "spelling", explanation: "'embarrass' has double 'r' and double 's'." },
-  { pattern: /\baccomodate\b/gi, replacement: "accommodate", type: "spelling", explanation: "'accommodate' has double 'c' and double 'm'." },
-  { pattern: /\bwich\b(?!\s+one)/gi, replacement: "which", type: "spelling", explanation: "'which' is the correct spelling." },
-  { pattern: /\bthier\b/gi, replacement: "their", type: "spelling", explanation: "'their' is the possessive form." },
-  { pattern: /\balot\b/gi, replacement: "a lot", type: "spelling", explanation: "'a lot' is two words." },
-  { pattern: /\bthere\s+(going|coming|doing|making|getting|having|working|taking|bringing|leaving|heading|arriving|planning|trying|looking|waiting|checking|reviewing|sending|preparing|meeting|starting|finishing|leading|running|building|creating|setting)\b/gi, replacement: "they're", type: "spelling", explanation: "Use 'they're' as a contraction of 'they are' before a verb." },
-  { pattern: /\btheir\s+(ready|done|finished|late|early|here|there|back|not|also|still|already|always|never|just|only|even|all|both|each|going|coming|working|happy|sorry|thankful|grateful|aware|concerned|interested)\b/gi, replacement: "they're", type: "spelling", explanation: "Use 'they're' (they are) instead of 'their' (possessive) before a description." },
-  { pattern: /\bcould of\b/gi, replacement: "could have", type: "grammar", explanation: "Use 'could have' instead of 'could of'." },
-  { pattern: /\bshould of\b/gi, replacement: "should have", type: "grammar", explanation: "Use 'should have' instead of 'should of'." },
-  { pattern: /\bwould of\b/gi, replacement: "would have", type: "grammar", explanation: "Use 'would have' instead of 'would of'." },
-  { pattern: /\bmight of\b/gi, replacement: "might have", type: "grammar", explanation: "Use 'might have' instead of 'might of'." },
-  { pattern: /\bless\s+(people|users|customers|employees|members|students|patients|participants|applicants|attendees)\b/gi, replacement: "fewer", type: "grammar", explanation: "Use 'fewer' for countable items." },
+  {
+    pattern: /\byoure\b/gi,
+    replacement: "you're",
+    type: "spelling",
+    explanation: "Use 'you're' as a contraction of 'you are'.",
+  },
+  {
+    pattern:
+      /\bits\s+(?!own|base|surface|size|shape|color|name|purpose|function|status|value|type|role|job|turn|best|worst|own|way)\b(?!(?:not|been|being|also|still|already|always|often|just|only|even|never|ever|all|both|each|every|some|any|no|the|a|an)\b)/gi,
+    replacement: "it's",
+    type: "spelling",
+    explanation: "Use 'it's' as a contraction of 'it is' or 'it has'.",
+  },
+  {
+    pattern: /\baffect\b/gi,
+    replacement: "effect",
+    type: "spelling",
+    explanation: "Use 'effect' (noun) for results; 'affect' is usually a verb.",
+  },
+  {
+    pattern: /\bteh\b/gi,
+    replacement: "the",
+    type: "spelling",
+    explanation: "Common typo: 'teh' should be 'the'.",
+  },
+  {
+    pattern: /\breciev(e|ed|es|ing)\b/gi,
+    replacement: "receiv$1",
+    type: "spelling",
+    explanation: "'receive' follows 'i before e except after c'.",
+  },
+  {
+    pattern: /\bacheive\b/gi,
+    replacement: "achieve",
+    type: "spelling",
+    explanation: "'achieve' follows 'i before e'.",
+  },
+  {
+    pattern: /\bdefinately\b/gi,
+    replacement: "definitely",
+    type: "spelling",
+    explanation: "'definitely' has two 'i's, not an 'a'.",
+  },
+  {
+    pattern: /\boccurence\b/gi,
+    replacement: "occurrence",
+    type: "spelling",
+    explanation: "'occurrence' has two 'c's and two 'r's.",
+  },
+  {
+    pattern: /\bseperate\b/gi,
+    replacement: "separate",
+    type: "spelling",
+    explanation: "'separate' has an 'a' after 'sep', not an 'e'.",
+  },
+  {
+    pattern: /\bcalender\b/gi,
+    replacement: "calendar",
+    type: "spelling",
+    explanation: "'calendar' ends with '-ar', not '-er'.",
+  },
+  {
+    pattern: /\btommorow\b/gi,
+    replacement: "tomorrow",
+    type: "spelling",
+    explanation: "'tomorrow' has one 'm', two 'r's.",
+  },
+  {
+    pattern: /\bbegining\b/gi,
+    replacement: "beginning",
+    type: "spelling",
+    explanation: "'beginning' has double 'n'.",
+  },
+  {
+    pattern: /\bembarras\b/gi,
+    replacement: "embarrass",
+    type: "spelling",
+    explanation: "'embarrass' has double 'r' and double 's'.",
+  },
+  {
+    pattern: /\baccomodate\b/gi,
+    replacement: "accommodate",
+    type: "spelling",
+    explanation: "'accommodate' has double 'c' and double 'm'.",
+  },
+  {
+    pattern: /\bwich\b(?!\s+one)/gi,
+    replacement: "which",
+    type: "spelling",
+    explanation: "'which' is the correct spelling.",
+  },
+  {
+    pattern: /\bthier\b/gi,
+    replacement: "their",
+    type: "spelling",
+    explanation: "'their' is the possessive form.",
+  },
+  {
+    pattern: /\balot\b/gi,
+    replacement: "a lot",
+    type: "spelling",
+    explanation: "'a lot' is two words.",
+  },
+  {
+    pattern:
+      /\bthere\s+(going|coming|doing|making|getting|having|working|taking|bringing|leaving|heading|arriving|planning|trying|looking|waiting|checking|reviewing|sending|preparing|meeting|starting|finishing|leading|running|building|creating|setting)\b/gi,
+    replacement: "they're",
+    type: "spelling",
+    explanation: "Use 'they're' as a contraction of 'they are' before a verb.",
+  },
+  {
+    pattern:
+      /\btheir\s+(ready|done|finished|late|early|here|there|back|not|also|still|already|always|never|just|only|even|all|both|each|going|coming|working|happy|sorry|thankful|grateful|aware|concerned|interested)\b/gi,
+    replacement: "they're",
+    type: "spelling",
+    explanation: "Use 'they're' (they are) instead of 'their' (possessive) before a description.",
+  },
+  {
+    pattern: /\bcould of\b/gi,
+    replacement: "could have",
+    type: "grammar",
+    explanation: "Use 'could have' instead of 'could of'.",
+  },
+  {
+    pattern: /\bshould of\b/gi,
+    replacement: "should have",
+    type: "grammar",
+    explanation: "Use 'should have' instead of 'should of'.",
+  },
+  {
+    pattern: /\bwould of\b/gi,
+    replacement: "would have",
+    type: "grammar",
+    explanation: "Use 'would have' instead of 'would of'.",
+  },
+  {
+    pattern: /\bmight of\b/gi,
+    replacement: "might have",
+    type: "grammar",
+    explanation: "Use 'might have' instead of 'might of'.",
+  },
+  {
+    pattern:
+      /\bless\s+(people|users|customers|employees|members|students|patients|participants|applicants|attendees)\b/gi,
+    replacement: "fewer",
+    type: "grammar",
+    explanation: "Use 'fewer' for countable items.",
+  },
 ];
 
 const CAPITALIZATION_RULES: ReplacementRule[] = [
-  { pattern: /\bi\b/g, replacement: "I", type: "capitalization", explanation: "'I' should always be capitalized." },
+  {
+    pattern: /\bi\b/g,
+    replacement: "I",
+    type: "capitalization",
+    explanation: "'I' should always be capitalized.",
+  },
 ];
 
 const PUNCTUATION_RULES: ReplacementRule[] = [
-  { pattern: /  +/g, replacement: " ", type: "punctuation", explanation: "Remove extra whitespace between words." },
-  { pattern: /\s+,/g, replacement: ",", type: "punctuation", explanation: "Remove space before comma." },
-  { pattern: /\s+\./g, replacement: ".", type: "punctuation", explanation: "Remove space before period." },
-  { pattern: /\s+\?/g, replacement: "?", type: "punctuation", explanation: "Remove space before question mark." },
-  { pattern: /\s+!/g, replacement: "!", type: "punctuation", explanation: "Remove space before exclamation mark." },
-  { pattern: /\.{2,}(?!\.)/g, replacement: ".", type: "punctuation", explanation: "Replace multiple periods with a single period." },
+  {
+    pattern: /  +/g,
+    replacement: " ",
+    type: "punctuation",
+    explanation: "Remove extra whitespace between words.",
+  },
+  {
+    pattern: /\s+,/g,
+    replacement: ",",
+    type: "punctuation",
+    explanation: "Remove space before comma.",
+  },
+  {
+    pattern: /\s+\./g,
+    replacement: ".",
+    type: "punctuation",
+    explanation: "Remove space before period.",
+  },
+  {
+    pattern: /\s+\?/g,
+    replacement: "?",
+    type: "punctuation",
+    explanation: "Remove space before question mark.",
+  },
+  {
+    pattern: /\s+!/g,
+    replacement: "!",
+    type: "punctuation",
+    explanation: "Remove space before exclamation mark.",
+  },
+  {
+    pattern: /\.{2,}(?!\.)/g,
+    replacement: ".",
+    type: "punctuation",
+    explanation: "Replace multiple periods with a single period.",
+  },
 ];
 
 const REDUNDANCY_RULES: ReplacementRule[] = [
-  { pattern: /\bjust\b/gi, replacement: "", type: "redundancy", explanation: "'just' can often be removed for conciseness." },
-  { pattern: /\breally\b/gi, replacement: "", type: "redundancy", explanation: "'really' can often be removed for conciseness." },
-  { pattern: /\bvery\b/gi, replacement: "", type: "redundancy", explanation: "'very' can often be removed for conciseness." },
-  { pattern: /\bbasically\b/gi, replacement: "", type: "redundancy", explanation: "'basically' can often be removed for conciseness." },
-  { pattern: /\bactually\b/gi, replacement: "", type: "redundancy", explanation: "'actually' can often be removed for conciseness." },
+  {
+    pattern: /\bjust\b/gi,
+    replacement: "",
+    type: "redundancy",
+    explanation: "'just' can often be removed for conciseness.",
+  },
+  {
+    pattern: /\breally\b/gi,
+    replacement: "",
+    type: "redundancy",
+    explanation: "'really' can often be removed for conciseness.",
+  },
+  {
+    pattern: /\bvery\b/gi,
+    replacement: "",
+    type: "redundancy",
+    explanation: "'very' can often be removed for conciseness.",
+  },
+  {
+    pattern: /\bbasically\b/gi,
+    replacement: "",
+    type: "redundancy",
+    explanation: "'basically' can often be removed for conciseness.",
+  },
+  {
+    pattern: /\bactually\b/gi,
+    replacement: "",
+    type: "redundancy",
+    explanation: "'actually' can often be removed for conciseness.",
+  },
 ];
 
 function applyRuleAndTrack(
@@ -101,7 +290,10 @@ function applyRuleAndTrack(
 ): { text: string; issues: GrammarIssue[] } {
   const issues: GrammarIssue[] = [];
   let match: RegExpExecArray | null;
-  const globalPattern = new RegExp(rule.pattern.source, rule.pattern.flags.includes("g") ? rule.pattern.flags : rule.pattern.flags + "g");
+  const globalPattern = new RegExp(
+    rule.pattern.source,
+    rule.pattern.flags.includes("g") ? rule.pattern.flags : rule.pattern.flags + "g",
+  );
   let result = text;
 
   while ((match = globalPattern.exec(result)) !== null) {

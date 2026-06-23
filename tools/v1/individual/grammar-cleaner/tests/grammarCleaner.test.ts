@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  cleanGrammar,
-  toReadyState,
-  type GrammarInput,
-} from "../services/grammarCleaner";
+import { cleanGrammar, toReadyState, type GrammarInput } from "../services/grammarCleaner";
 import { EMPTY_TEXT_INPUT, SAMPLE_TEXTS } from "../services/fixtures";
 import {
   checkInputLimits,

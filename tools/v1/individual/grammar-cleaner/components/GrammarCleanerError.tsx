@@ -6,7 +6,11 @@ export interface GrammarCleanerErrorProps {
   onRetry?: () => void;
 }
 
-export function GrammarCleanerError({ code, message, onRetry }: GrammarCleanerErrorProps): JSX.Element {
+export function GrammarCleanerError({
+  code,
+  message,
+  onRetry,
+}: GrammarCleanerErrorProps): JSX.Element {
   return (
     <section
       aria-label="Grammar check error"
@@ -18,9 +22,7 @@ export function GrammarCleanerError({ code, message, onRetry }: GrammarCleanerEr
         backgroundColor: "#fdf0ef",
       }}
     >
-      <p style={{ color: "#c0392b", fontWeight: 600, marginTop: 0 }}>
-        Unable to check grammar
-      </p>
+      <p style={{ color: "#c0392b", fontWeight: 600, marginTop: 0 }}>Unable to check grammar</p>
       <p style={{ color: "#555", margin: "0.5rem 0" }}>{message}</p>
       {onRetry && (
         <button

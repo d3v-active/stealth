@@ -12,7 +12,8 @@ export const SAMPLE_TEXTS: GrammarFixture[] = [
     description: "Text with homophone and capitalization errors.",
     input: {
       subject: "Quick draft",
-      bodyText: "i think there going to the meeting tomorrow. Your the best candidate for the role. Its important to recieve the documents before friday.",
+      bodyText:
+        "i think there going to the meeting tomorrow. Your the best candidate for the role. Its important to recieve the documents before friday.",
     },
   },
   {
@@ -20,7 +21,8 @@ export const SAMPLE_TEXTS: GrammarFixture[] = [
     description: "Text with filler words and redundancy.",
     input: {
       subject: "Update",
-      bodyText: "I just wanted to basically say that we are very happy with the results. The team really did an actually amazing job on this project.",
+      bodyText:
+        "I just wanted to basically say that we are very happy with the results. The team really did an actually amazing job on this project.",
     },
   },
   {
@@ -36,7 +38,8 @@ export const SAMPLE_TEXTS: GrammarFixture[] = [
     description: "Text with multiple types of grammar issues.",
     input: {
       subject: "Follow up",
-      bodyText: "i would of called you earlier but i accidently lost youre number. Theirs alot of work to do before the deadline .  Please confirm the calender invite.",
+      bodyText:
+        "i would of called you earlier but i accidently lost youre number. Theirs alot of work to do before the deadline .  Please confirm the calender invite.",
     },
   },
 ];
