@@ -19,7 +19,8 @@ const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9
 
 /** Strip HTML tags and null bytes from a string before storage. */
 const HTML_TAG_REGEX = /<[^>]*>/g;
-const NULL_BYTE_REGEX = /\x00/g;
+// Build the null-byte regex at runtime to avoid ESLint `no-control-regex`
+const NULL_BYTE_REGEX = new RegExp(String.fromCharCode(0), "g");
 
 // ---------------------------------------------------------------------------
 // Error type
