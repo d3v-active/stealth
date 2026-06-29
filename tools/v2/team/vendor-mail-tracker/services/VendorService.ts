@@ -19,7 +19,9 @@ export class VendorService {
    */
   async getVendors(filter?: VendorFilter): Promise<Vendor[]> {
     const normalizedFilter = filter ? { ...filter } : undefined;
-    const query = normalizedFilter?.search ? sanitizeText(normalizedFilter.search, { maxLength: 80 }) : undefined;
+    const query = normalizedFilter?.search
+      ? sanitizeText(normalizedFilter.search, { maxLength: 80 })
+      : undefined;
 
     if (query) {
       normalizedFilter!.search = query;

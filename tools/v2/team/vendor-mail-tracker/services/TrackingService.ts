@@ -18,7 +18,9 @@ export class TrackingService {
    */
   async getRecords(filter?: TrackingFilter): Promise<CommunicationRecord[]> {
     const safeFilter = filter ? createSafeRecord(filter as Record<string, unknown>) : undefined;
-    const normalizedVendorId = safeFilter?.vendorId ? sanitizeText(safeFilter.vendorId, { maxLength: 64 }) : undefined;
+    const normalizedVendorId = safeFilter?.vendorId
+      ? sanitizeText(safeFilter.vendorId, { maxLength: 64 })
+      : undefined;
 
     if (safeFilter && normalizedVendorId) {
       safeFilter.vendorId = normalizedVendorId;
@@ -45,7 +47,9 @@ export class TrackingService {
     preview?: string,
   ): Promise<CommunicationRecord> {
     const safeVendorId = sanitizeText(vendorId, { maxLength: 64, fallback: "unknown-vendor" });
-    const safeType = Object.values(CommunicationType).includes(type) ? type : CommunicationType.OTHER;
+    const safeType = Object.values(CommunicationType).includes(type)
+      ? type
+      : CommunicationType.OTHER;
     const safeSubject = sanitizeText(subject, { maxLength: 200, fallback: "" });
     const safePreview = sanitizeText(preview, { maxLength: 140, fallback: "" });
 

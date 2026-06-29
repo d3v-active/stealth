@@ -38,7 +38,13 @@ export function sanitizeVendorInput(input) {
   }
 
   const category = sanitizeText(input.category, { maxLength: 40, fallback: "other" });
-  const allowedCategories = new Set(["email-service", "communication", "business", "marketplace", "other"]);
+  const allowedCategories = new Set([
+    "email-service",
+    "communication",
+    "business",
+    "marketplace",
+    "other",
+  ]);
   if (!allowedCategories.has(category)) {
     return { valid: false, reason: "invalid_category" };
   }
