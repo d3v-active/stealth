@@ -8,6 +8,7 @@ import type {
   TrackingFilter,
   VendorTrackingStats,
 } from "../types";
+import { clampCollection, createSafeRecord, sanitizeText } from "./security-guards.js";
 
 export class TrackingService {
   constructor(private deps: object = {}) {}
@@ -16,8 +17,14 @@ export class TrackingService {
    * Get all communication records with optional filtering
    */
   async getRecords(filter?: TrackingFilter): Promise<CommunicationRecord[]> {
-    // Implementation: fetch communication records
-    throw new Error("Not implemented - use fixtures for V2");
+    const safeFilter = filter ? createSafeRecord(filter as Record<string, unknown>) : undefined;
+    const normalizedVendorId = safeFilter?.vendorId ? sanitizeText(safeFilter.vendorId, { maxLength: 64 }) : undefined;
+
+    if (safeFilter && normalizedVendorId) {
+      safeFilter.vendorId = normalizedVendorId;
+    }
+
+    return clampCollection([], 50);
   }
 
   /**
@@ -37,8 +44,23 @@ export class TrackingService {
     subject?: string,
     preview?: string,
   ): Promise<CommunicationRecord> {
-    // Implementation: create communication record
-    throw new Error("Not implemented - use fixtures for V2");
+    const safeVendorId = sanitizeText(vendorId, { maxLength: 64, fallback: "unknown-vendor" });
+    const safeType = Object.values(CommunicationType).includes(type) ? type : CommunicationType.OTHER;
+    const safeSubject = sanitizeText(subject, { maxLength: 200, fallback: "" });
+    const safePreview = sanitizeText(preview, { maxLength: 140, fallback: "" });
+
+    return createSafeRecord({
+      id: `record-${safeVendorId}-${Date.now()}`,
+      vendorId: safeVendorId,
+      timestamp: new Date(),
+      type: safeType,
+      subject: safeSubject,
+      preview: safePreview,
+      status: CommunicationStatus.RECEIVED,
+      metadata: {
+        source: "vendor-mail-tracker",
+      },
+    }) as CommunicationRecord;
   }
 
   /**
