@@ -47,7 +47,9 @@ function buildCandidateId(messageId: string): string {
 
 function validateSourceMessage(
   value: unknown,
-): { valid: true; message: UnsubscribeFinderSourceMessage } | { valid: false; invalidFields: string[] } {
+):
+  | { valid: true; message: UnsubscribeFinderSourceMessage }
+  | { valid: false; invalidFields: string[] } {
   if (!isRecord(value)) {
     return { valid: false, invalidFields: ["id", "type", "from", "subject", "receivedAt"] };
   }
@@ -233,7 +235,8 @@ export function analyzeUnsubscribeCandidates(
   for (const value of request.sourceMessages) {
     const validation = validateSourceMessage(value);
     if (!validation.valid) {
-      const sourceMessageId = isRecord(value) && typeof value.id === "string" ? value.id : undefined;
+      const sourceMessageId =
+        isRecord(value) && typeof value.id === "string" ? value.id : undefined;
       return createFailure({
         code: UNSUBSCRIBE_FINDER_ERROR_CODES.INVALID_SOURCE_MESSAGE,
         message:

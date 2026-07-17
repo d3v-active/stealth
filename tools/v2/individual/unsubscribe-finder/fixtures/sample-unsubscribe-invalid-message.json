@@ -16,9 +16,7 @@
   "expectedError": {
     "code": "INVALID_SOURCE_MESSAGE",
     "message": "Each source message must include string fields for id, type, from, subject, and receivedAt.",
-    "invalidFields": [
-      "from"
-    ]
+    "invalidFields": ["from"]
   },
   "reviewNotes": [
     "Malformed message payloads must fail with a deterministic validation error.",

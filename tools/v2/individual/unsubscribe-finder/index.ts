@@ -1,7 +1,4 @@
-export {
-  analyzeUnsubscribeCandidates,
-  createUnsubscribeFinderService,
-} from "./services/index.ts";
+export { analyzeUnsubscribeCandidates, createUnsubscribeFinderService } from "./services/index.ts";
 export {
   UNSUBSCRIBE_FINDER_ERROR_CODES,
   UNSUBSCRIBE_FINDER_REVIEW_NOTES,

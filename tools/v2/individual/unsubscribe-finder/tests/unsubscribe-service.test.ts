@@ -12,12 +12,7 @@ import type {
 } from "../types/index.ts";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
-const successFixturePath = join(
-  currentDir,
-  "..",
-  "fixtures",
-  "sample-unsubscribe-candidates.json",
-);
+const successFixturePath = join(currentDir, "..", "fixtures", "sample-unsubscribe-candidates.json");
 const emptyInputFixturePath = join(
   currentDir,
   "..",
