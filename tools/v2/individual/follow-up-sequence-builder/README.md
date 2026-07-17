@@ -34,11 +34,11 @@ Each step in the sequence has:
 
 ## Urgency-Informed Intervals
 
-| Urgency  | Step 1 | Step 2 | Step 3 |
-|----------|--------|--------|--------|
-| critical | 1 day  | 3 days | 7 days |
-| high     | 2 days | 5 days | 10 days |
-| normal   | 3 days | 7 days | 14 days |
+| Urgency  | Step 1 | Step 2  | Step 3  |
+| -------- | ------ | ------- | ------- |
+| critical | 1 day  | 3 days  | 7 days  |
+| high     | 2 days | 5 days  | 10 days |
+| normal   | 3 days | 7 days  | 14 days |
 | low      | 7 days | 14 days | 30 days |
 
 ## Testing Focus

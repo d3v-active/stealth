@@ -46,12 +46,12 @@ same output.
 
 The engine scans the input text for urgency keywords and deadline mentions:
 
-| Level    | Example keywords                     |
-|----------|--------------------------------------|
-| critical | asap, urgent, immediately            |
-| high     | time-sensitive, important, priority  |
-| normal   | soon, shortly (default)              |
-| low      | no-rush contexts (FYI, whenever)     |
+| Level    | Example keywords                    |
+| -------- | ----------------------------------- |
+| critical | asap, urgent, immediately           |
+| high     | time-sensitive, important, priority |
+| normal   | soon, shortly (default)             |
+| low      | no-rush contexts (FYI, whenever)    |
 
 When a deadline (ISO date with "by", "due", "deadline", or "before") is present
 without urgency keywords, the urgency is raised to `high`.

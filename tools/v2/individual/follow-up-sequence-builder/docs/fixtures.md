@@ -19,6 +19,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `high`, Urgency: `critical`.
 - 3 steps: 1 day, 3 days, 7 days.
 - No warnings.
@@ -40,6 +41,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `medium`, Urgency: `normal`.
 - 3 steps: 3 days, 7 days, 14 days.
 - No explicit request warning (has "circle back", no "follow up").
@@ -60,6 +62,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `low`.
 - Empty steps array.
 - Low-priority context warning.
@@ -80,6 +83,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `low`.
 - Empty steps array.
 - No actionable signal warning.
@@ -99,6 +103,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `medium`, Urgency: `normal`.
 - 3 steps with normal intervals.
 - No warnings.
@@ -120,6 +125,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `high`, Urgency: `critical`.
 - 3 steps: 1 day, 3 days, 7 days.
 
@@ -139,6 +145,7 @@ Input:
 ```
 
 Expected:
+
 - Confidence: `medium`, Urgency: `normal`.
 - Warning about no explicit follow-up request.
 
@@ -154,6 +161,7 @@ Input:
 ```
 
 Expected:
+
 - Warning about existing sequence.
 
 ## Oversized Input (Guard Rejection)
@@ -161,6 +169,7 @@ Expected:
 Input: body > 50000 characters.
 
 Expected:
+
 - Guard returns `input-too-large` error.
 - Engine never runs.
 
@@ -169,5 +178,6 @@ Expected:
 Input: missing `messageId`.
 
 Expected:
+
 - Guard returns `invalid-input` error.
 - Engine never runs.

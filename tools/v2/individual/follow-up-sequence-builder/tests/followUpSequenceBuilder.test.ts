@@ -81,16 +81,16 @@ describe("buildSequence", () => {
 
   it("detects duplicate sequences", () => {
     const seq = buildSequence(sampleInputs.normalFollowUp);
-    expect(
-      isSequenceDuplicate(seq, [{ sourceMessageId: "msg-2002", title: seq.title }]),
-    ).toBe(true);
+    expect(isSequenceDuplicate(seq, [{ sourceMessageId: "msg-2002", title: seq.title }])).toBe(
+      true,
+    );
   });
 
   it("does not flag different messages as duplicates", () => {
     const seq = buildSequence(sampleInputs.normalFollowUp);
-    expect(
-      isSequenceDuplicate(seq, [{ sourceMessageId: "msg-other", title: "Other" }]),
-    ).toBe(false);
+    expect(isSequenceDuplicate(seq, [{ sourceMessageId: "msg-other", title: "Other" }])).toBe(
+      false,
+    );
   });
 
   it("is deterministic for the same input", () => {

@@ -98,7 +98,10 @@ export const LOW_PRIORITY_TERMS = [
   "thought you might like",
 ];
 
-export const DEFAULT_SEQUENCE_TEMPLATES: Record<UrgencyLevel, { delayDays: number; template: string; condition: string }[]> = {
+export const DEFAULT_SEQUENCE_TEMPLATES: Record<
+  UrgencyLevel,
+  { delayDays: number; template: string; condition: string }[]
+> = {
   critical: [
     { delayDays: 1, template: "Follow up on urgent request", condition: "No response received" },
     { delayDays: 3, template: "Escalate urgent request", condition: "Still no response" },
@@ -107,7 +110,11 @@ export const DEFAULT_SEQUENCE_TEMPLATES: Record<UrgencyLevel, { delayDays: numbe
   high: [
     { delayDays: 2, template: "Gentle reminder", condition: "No response received" },
     { delayDays: 5, template: "Follow-up on pending item", condition: "Still no response" },
-    { delayDays: 10, template: "Escalate if unresolved", condition: "No response after two follow-ups" },
+    {
+      delayDays: 10,
+      template: "Escalate if unresolved",
+      condition: "No response after two follow-ups",
+    },
   ],
   normal: [
     { delayDays: 3, template: "Friendly check-in", condition: "No response received" },
@@ -162,10 +169,14 @@ function detectUrgency(text: string): { signals: SequenceSignal[]; urgency: Urge
 
 function priorityLevel(level: UrgencyLevel): number {
   switch (level) {
-    case "low": return 0;
-    case "normal": return 1;
-    case "high": return 2;
-    case "critical": return 3;
+    case "low":
+      return 0;
+    case "normal":
+      return 1;
+    case "high":
+      return 2;
+    case "critical":
+      return 3;
   }
 }
 
@@ -213,16 +224,13 @@ function generateSequenceId(input: SequenceBuildInput): string {
   const seed = input.messageId + input.subject;
   for (let i = 0; i < seed.length; i++) {
     const char = seed.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash;
   }
   return "seq-" + prefix + "-" + Math.abs(hash).toString(36);
 }
 
-function generateSteps(
-  urgency: UrgencyLevel,
-  maxSteps: number,
-): FollowUpStep[] {
+function generateSteps(urgency: UrgencyLevel, maxSteps: number): FollowUpStep[] {
   const templates = DEFAULT_SEQUENCE_TEMPLATES[urgency];
   const count = Math.min(templates.length, maxSteps);
 
@@ -307,10 +315,7 @@ export function buildSequence(
   }
 
   const existing = options.existingSequences ?? [];
-  if (
-    steps.length > 0 &&
-    existing.some((item) => item.sourceMessageId === input.messageId)
-  ) {
+  if (steps.length > 0 && existing.some((item) => item.sourceMessageId === input.messageId)) {
     warnings.push("A sequence for this message already exists.");
   }
 
@@ -349,7 +354,5 @@ export function isSequenceDuplicate(
   sequence: FollowUpSequence,
   existing: ExistingSequenceKey[],
 ): boolean {
-  return existing.some(
-    (item) => item.sourceMessageId === sequence.sourceMessageId,
-  );
+  return existing.some((item) => item.sourceMessageId === sequence.sourceMessageId);
 }
