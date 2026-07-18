@@ -6,10 +6,10 @@ re-exported from the folder root `index.ts`.
 
 ## Entry points
 
-| Export | Kind | Use when |
-| --- | --- | --- |
-| `safeAnalyzeSentiment(input: unknown, options?: unknown): SafeSentimentResult` | Guarded service entry point | Caller input is untrusted (API handlers, queue consumers). Never throws. |
-| `analyzeSentiment(input: SentimentAnalysisInput, options?: SentimentAnalysisOptions): SentimentAnalysisResult` | Pure engine | Input is already validated and sanitized (e.g. replaying fixtures, internal pipelines). |
+| Export                                                                                                         | Kind                        | Use when                                                                                |
+| -------------------------------------------------------------------------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------- |
+| `safeAnalyzeSentiment(input: unknown, options?: unknown): SafeSentimentResult`                                 | Guarded service entry point | Caller input is untrusted (API handlers, queue consumers). Never throws.                |
+| `analyzeSentiment(input: SentimentAnalysisInput, options?: SentimentAnalysisOptions): SentimentAnalysisResult` | Pure engine                 | Input is already validated and sanitized (e.g. replaying fixtures, internal pipelines). |
 
 Both functions are pure and deterministic: no network calls, no mailbox access,
 no randomness, no clock reads, and no mutation of caller-supplied objects.
@@ -19,17 +19,17 @@ Identical input always produces an identical result.
 
 ```ts
 interface SentimentAnalysisInput {
-  messageId: string;      // required, non-empty; echoed back in the result
-  subject: string;        // may be empty when body is not
-  body: string;           // plain text; may be empty when subject is not
+  messageId: string; // required, non-empty; echoed back in the result
+  subject: string; // may be empty when body is not
+  body: string; // plain text; may be empty when subject is not
   senderAddress?: string; // correlation only — never analyzed
-  receivedAt?: string;    // ISO 8601 when present
-  language?: string;      // BCP 47; only "en" / "en-*" supported
+  receivedAt?: string; // ISO 8601 when present
+  language?: string; // BCP 47; only "en" / "en-*" supported
 }
 
 interface SentimentAnalysisOptions {
   includeSignals?: boolean; // default true
-  maxSignals?: number;      // 1–100, default 25
+  maxSignals?: number; // 1–100, default 25
 }
 ```
 
@@ -39,10 +39,10 @@ interface SentimentAnalysisOptions {
 interface SentimentAnalysisResult {
   messageId: string;
   sentiment: "positive" | "negative" | "neutral" | "mixed";
-  score: number;                          // [-1, 1]; 0 = neutral / no evidence
-  confidence: "low" | "medium" | "high";  // from matched-evidence count
-  signals: SentimentSignal[];             // strongest first, truncated to maxSignals
-  stats: SentimentStats;                  // deterministic counters
+  score: number; // [-1, 1]; 0 = neutral / no evidence
+  confidence: "low" | "medium" | "high"; // from matched-evidence count
+  signals: SentimentSignal[]; // strongest first, truncated to maxSignals
+  stats: SentimentStats; // deterministic counters
 }
 ```
 
@@ -56,13 +56,13 @@ type SafeSentimentResult =
 
 ## Error codes
 
-| Code | Trigger |
-| --- | --- |
-| `invalid-input` | Payload is not an object, `messageId` missing or blank, `subject`/`body` not strings, `receivedAt` unparseable, or optional fields have wrong types. |
-| `invalid-options` | `includeSignals` not a boolean, or `maxSignals` outside 1–100. |
-| `input-too-large` | `messageId` > 256 chars, `subject` > 500 chars, `body` > 50,000 chars or > 10,000 words (limits in `GUARD_LIMITS`). |
-| `empty-content` | Subject and body are both empty after sanitization. |
-| `unsupported-language` | `language` is set and is not `en` or an `en-*` regional tag. |
+| Code                   | Trigger                                                                                                                                              |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `invalid-input`        | Payload is not an object, `messageId` missing or blank, `subject`/`body` not strings, `receivedAt` unparseable, or optional fields have wrong types. |
+| `invalid-options`      | `includeSignals` not a boolean, or `maxSignals` outside 1–100.                                                                                       |
+| `input-too-large`      | `messageId` > 256 chars, `subject` > 500 chars, `body` > 50,000 chars or > 10,000 words (limits in `GUARD_LIMITS`).                                  |
+| `empty-content`        | Subject and body are both empty after sanitization.                                                                                                  |
+| `unsupported-language` | `language` is set and is not `en` or an `en-*` regional tag.                                                                                         |
 
 ## Scoring model
 
