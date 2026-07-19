@@ -47,6 +47,7 @@ export const openApiDocument = {
     "/health": { get: { summary: "Read service health" } },
     "/protocol": { get: { summary: "Discover protocol capabilities" } },
     "/openapi.json": { get: { summary: "Read this OpenAPI document" } },
+    "/errors": { get: { summary: "Machine‑readable error catalogue (versioned)" } },
     "/policies/{owner}": {
       get: { summary: "Read mailbox policy" },
       put: { summary: "Replace mailbox policy", security: actorSecurity },
